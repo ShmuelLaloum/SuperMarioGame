@@ -49,6 +49,7 @@ public class GameFrame extends JPanel {
         timer.start();
         this.addKeyListener(new Controller(mario,this));
         this.mainGameLoop();
+        moveScreen(0);
     }
     private void setupGameObjects(){
         this.mario = levelX.getMario();
