@@ -46,6 +46,8 @@ public class GameFrame extends JPanel {
         pauseButton.addActionListener(e -> {
             this.setLayout(new BorderLayout());
             stop = true;
+            levelX.setEndPointX(endPoint);
+            levelX.setStartPointX(startPoint);
             this.add(new PauseMenuScreen(levelX,window));
             this.revalidate();
             this.repaint();

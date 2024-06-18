@@ -17,8 +17,8 @@ public class level2 extends level{
     private final List<castle> castles = new ArrayList<>();
     private Person mario;
     public static final int coinsRequired = 0;//need to change
-    public static final int startPointX = 0;
-    public static final int endPointX = 0;//need to change
+    private int startPointX = 0;
+    private int endPointX = 0;//need to change
 
     public level2(){
         setMario();
@@ -80,6 +80,12 @@ public class level2 extends level{
     @Override
     public void addDefaultBigTubes() {
 
+    }
+    public void setStartPointX(int newStartPointX) {
+        startPointX = newStartPointX;
+    }
+    public void setEndPointX(int newEndPointX) {
+        endPointX = newEndPointX;
     }
 
     public Person getMario(){

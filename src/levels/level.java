@@ -14,6 +14,8 @@ public abstract class level {
     public abstract void addDefaultBillBlasters();
     public abstract void addDefaultCoins();
     public abstract void addDefaultBigTubes();
+    public abstract void setStartPointX(int newStartPointX);
+    public abstract void setEndPointX(int newEndPointX);
     public abstract Person getMario();
     public abstract int getCoinsRequired();
     public abstract List<Coin> getCoins();

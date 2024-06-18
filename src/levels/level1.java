@@ -17,8 +17,8 @@ public class level1 extends level{
     private final List<castle> castles = new ArrayList<>();
     private Person mario;
     public static final int coinsRequired = 5;
-    public static final int startPointX = 0;
-    public static final int endPointX = 3500;
+    private int startPointX = 0;
+    private int endPointX = 3500;
     public level1() {
         setMario();
         addDefaultPenGoalPoles();
@@ -88,6 +88,13 @@ public class level1 extends level{
     }
     public void addDefaultBigTubes() {
         bigTubes.add(new bigTube(300, 450, 80, 130, bigTube.type.ground));
+    }
+
+    public void setStartPointX(int newStartPointX) {
+        startPointX = newStartPointX;
+    }
+    public void setEndPointX(int newEndPointX) {
+        endPointX = newEndPointX;
     }
     public Person getMario(){
         return mario;

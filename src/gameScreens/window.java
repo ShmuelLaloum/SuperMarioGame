@@ -7,15 +7,16 @@ import java.awt.*;
 
 public class window extends JFrame {
     public window(){
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        this.setLayout(new BorderLayout());
+        this.setSize(1920,1080);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(true);
         this.setLayout(new BorderLayout());
-        //StartScreen startScreen = new StartScreen(this);
-        //switchPanel(startScreen);
+        StartScreen startScreen = new StartScreen(this);
+        switchPanel(startScreen);
 
-        switchPanel(new GameFrame(new level1(),this));
+        //switchPanel(new GameFrame(new level1(),this));
         this.setVisible(true);
     }
     public void switchPanel(JPanel newPanel) {
