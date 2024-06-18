@@ -33,7 +33,7 @@ public class levelsMenu extends JLayeredPane {
 
 
         JButton level1Button = new JButton();
-        level1Button.setBounds(175, 365, 70, 70);
+        level1Button.setBounds(175, 390, 70, 70);
         level1Button.setOpaque(false);
         level1Button.setContentAreaFilled(false);
         level1Button.setBorderPainted(false);
@@ -50,7 +50,7 @@ public class levelsMenu extends JLayeredPane {
         });
 
         JButton level2Button = new JButton();
-        level2Button.setBounds(175, 695, 70, 70);
+        level2Button.setBounds(175, 740, 70, 70);
         level2Button.setOpaque(false);
         level2Button.setContentAreaFilled(false);
         level2Button.setBorderPainted(false);
@@ -69,7 +69,7 @@ public class levelsMenu extends JLayeredPane {
         });
 
         JButton level3Button = new JButton();
-        level3Button.setBounds(735, 695, 70, 70);
+        level3Button.setBounds(735, 740, 70, 70);
         level3Button.setOpaque(false);
         level3Button.setContentAreaFilled(false);
         level3Button.setBorderPainted(false);
@@ -88,7 +88,7 @@ public class levelsMenu extends JLayeredPane {
         });
 
         JButton level4Button = new JButton();
-        level4Button.setBounds(735, 365, 70, 70);
+        level4Button.setBounds(735, 390, 70, 70);
         level4Button.setOpaque(false);
         level4Button.setContentAreaFilled(false);
         level4Button.setBorderPainted(false);
@@ -106,7 +106,7 @@ public class levelsMenu extends JLayeredPane {
         });
 
         JButton level5Button = new JButton();
-        level5Button.setBounds(1295, 365, 70, 70);
+        level5Button.setBounds(1295, 390, 70, 70);
         level5Button.setOpaque(false);
         level5Button.setContentAreaFilled(false);
         level5Button.setBorderPainted(false);
