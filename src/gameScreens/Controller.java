@@ -9,12 +9,14 @@ public class Controller implements KeyListener {
     private boolean rightPressed = false;
     private boolean leftPressed = false;
     private boolean jumpPressed = false;
+    private boolean active;
     private Person mario;
     private GameFrame gameFrame;
 
     public Controller(Person mario,GameFrame gameFrame) {
         this.mario = mario;
         this.gameFrame = gameFrame;
+        active = true;
         updateMovement();
     }
 
@@ -49,9 +51,9 @@ public class Controller implements KeyListener {
         }
     }
 
-    private synchronized void updateMovement() {
+    private void updateMovement() {
         new Thread(()->{
-            while (mario.isAlive()){
+            while (active){
                 if (jumpPressed) {
                     if (rightPressed) {
                         if (mario.isCanGoRight()) {
@@ -84,5 +86,8 @@ public class Controller implements KeyListener {
                 }
             }
         }).start();
+    }
+    public void setActive(boolean newActive){
+        this.active = newActive;
     }
 }

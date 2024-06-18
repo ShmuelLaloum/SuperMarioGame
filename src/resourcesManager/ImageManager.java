@@ -45,7 +45,11 @@ public class ImageManager {
         LEVEL_COMPLETE_BACKGROUND("levelCompleteBackground.jpg"),
         LEVELS_BUTTON("levelsButton.png"),
         NEXT_LEVEL_BUTTON("nextLevelButton.png"),
-        RETRY_LEVEL_BUTTON("retryLevelButton.png");
+        RETRY_LEVEL_BUTTON("retryLevelButton.png"),
+        OPTIONS_BACKGROUND("optionsBackground.png"),
+        QUIT_GAME_BUTTON("quitGameButton.png"),
+        CONTINUE_BUTTON("continueButton.png");
+
 
 
 

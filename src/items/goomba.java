@@ -16,7 +16,6 @@ public class goomba implements enemyAble,needLandAble, Cloneable {
     public static final int width = 35;
     public static final int height = 35;
     private int direction = -1;
-    private float clarity = 1f;
     private boolean running = true;
     private boolean alive;
     public goomba(int x, int y){
@@ -29,9 +28,6 @@ public class goomba implements enemyAble,needLandAble, Cloneable {
     }
     public void paint(Graphics graphics){
         Graphics2D g2d = (Graphics2D) graphics.create();
-        float alpha = clarity;
-        AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
-        g2d.setComposite(composite);
         g2d.drawImage(imageIcon.getImage(), x, y+(!running ? height/2 : 0), width, (!running ? height/2 : height), null);
         g2d.dispose();
     }

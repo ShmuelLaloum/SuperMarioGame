@@ -14,6 +14,8 @@ public class window extends JFrame {
         this.setLayout(new BorderLayout());
         StartScreen startScreen = new StartScreen(this);
         switchPanel(startScreen);
+
+        //switchPanel(new GameFrame(new level1(),this));
         this.setVisible(true);
     }
     public void switchPanel(JPanel newPanel) {
