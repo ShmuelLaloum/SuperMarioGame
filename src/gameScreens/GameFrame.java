@@ -30,14 +30,11 @@ public class GameFrame extends JPanel {
     private List<PenGoalPole> penGoalPoles = new ArrayList<>();
     private List<castle> castles = new ArrayList<>();
     private Person mario;
-    private Controller controller;
     private final level levelX;
     private final window window;
-    private boolean stop = false;
-    private PauseMenuScreen pauseMenu;
     public GameFrame(level level, window window) {
         SoundManager.loopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC,-10.0f);
-        //this.setFocusable(true);
+        this.setFocusable(true);
         this.levelX = level;
         this.window = window;
         setupGameObjects();
@@ -50,25 +47,8 @@ public class GameFrame extends JPanel {
             }
         });
         timer.start();
-        this.controller = new Controller(mario,this);
-        this.addKeyListener(controller);
+        this.addKeyListener(new Controller(mario,this));
         this.mainGameLoop();
-        //this.add(new PauseMenuScreen(levelX,window));
-        this.setLayout(null);
-        JButton pauseButton = new JButton("Pause");
-        pauseButton.setBounds(500,90,50,50);
-        pauseButton.addActionListener(e ->{
-            this.setLayout(new BorderLayout());
-            pauseMenu = new PauseMenuScreen(levelX,window);
-            stop = true;
-            this.add(pauseMenu);
-            this.revalidate();
-            this.repaint();
-            this.remove(pauseButton);
-        });
-        this.add(pauseButton);
-
-
     }
     private void setupGameObjects(){
         this.mario = levelX.getMario();
@@ -108,17 +88,14 @@ public class GameFrame extends JPanel {
     public void mainGameLoop(){
         new Thread(() -> {
             while (!mario.isOutOfFrame() &&  mario.getX() < (endPoint-mario.getWidth())) {
-                if (!stop) {
-                    updateGameObjects();
-                    this.repaint();
-                }
+                updateGameObjects();
+                this.repaint();
                 try {
                     Thread.sleep(2);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            this.controller.setActive(false);
             SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC);
             window.switchPanel(new endLevelScreen((mario.isAlive() && collectedCoins >= levelX.getCoinsRequired() ? endLevelScreen.Status.PASS : endLevelScreen.Status.FAIL),levelX,window));
         }).start();
@@ -219,7 +196,6 @@ public class GameFrame extends JPanel {
             if (collision(enemyAbles.get(i).body(), mario.body())) {
                 if (mario.getStatus() == Person.options.NORMAL) {
                     mario.die(getHeight());
-                    this.controller.setActive(false);
                 } else {
                     mario.normalBody();
                     if (enemyAbles.get(i) instanceof goomba) {
@@ -380,20 +356,4 @@ public class GameFrame extends JPanel {
             endPoint += distance;
         }
     }
-    private void showPauseMenu() {
-        // עצירת הלולאה הראשית של המשחק
-        stop = true;
-
-        // הסרת המאזין לקלטים
-
-        // הוספת מחלקת העצירה למסך
-        this.add(pauseMenu);
-
-        // הסרת כל הקומפוננטות האחרות של GameFrame
-
-        // עדכון המסך
-        this.revalidate();
-        this.repaint();
-    }
-
 }
