@@ -12,10 +12,10 @@ public class window extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setResizable(true);
         this.setLayout(new BorderLayout());
-        StartScreen startScreen = new StartScreen(this);
-        switchPanel(startScreen);
+        //StartScreen startScreen = new StartScreen(this);
+        //switchPanel(startScreen);
 
-        //switchPanel(new GameFrame(new level1(),this));
+        switchPanel(new GameFrame(new level1(),this));
         this.setVisible(true);
     }
     public void switchPanel(JPanel newPanel) {

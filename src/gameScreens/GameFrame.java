@@ -32,12 +32,25 @@ public class GameFrame extends JPanel {
     private Person mario;
     private final level levelX;
     private final window window;
+    private boolean stop = false;
     public GameFrame(level level, window window) {
+        this.setLayout(null);
         SoundManager.loopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC,-10.0f);
         this.setFocusable(true);
         this.levelX = level;
         this.window = window;
         setupGameObjects();
+
+        JButton pauseButton = new JButton();
+        pauseButton.setBounds(500,90,90,90);
+        pauseButton.addActionListener(e -> {
+            this.setLayout(new BorderLayout());
+            stop = true;
+            this.add(new PauseMenuScreen(levelX,window));
+            this.revalidate();
+            this.repaint();
+        });
+        this.add(pauseButton);
 
         int delay = 50;
         Timer timer = new Timer(delay, e -> {
@@ -49,7 +62,6 @@ public class GameFrame extends JPanel {
         timer.start();
         this.addKeyListener(new Controller(mario,this));
         this.mainGameLoop();
-        moveScreen(0);
     }
     private void setupGameObjects(){
         this.mario = levelX.getMario();
@@ -89,8 +101,10 @@ public class GameFrame extends JPanel {
     public void mainGameLoop(){
         new Thread(() -> {
             while (!mario.isOutOfFrame() &&  mario.getX() < (endPoint-mario.getWidth())) {
-                updateGameObjects();
-                this.repaint();
+                if (!stop) {
+                    updateGameObjects();
+                    this.repaint();
+                }
                 try {
                     Thread.sleep(2);
                 } catch (Exception e) {
