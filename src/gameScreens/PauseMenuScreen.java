@@ -45,7 +45,7 @@ public class PauseMenuScreen extends JPanel {
         // אופציונלי: יישום אפקט טשטוש פשוט (טשטוש מורכב דורש יותר מאמץ)
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(new Color(255, 255, 255, 128)); // לבן חצי-שקוף
-        g2d.fillRect(0, 0, getWidth(), getHeight());
+        g2d.fillRect(0, 0, 1540, 941);
         g2d.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.OPTIONS_BACKGROUND).getImage(),500,200,500,550,this);
         g2d.dispose();
 

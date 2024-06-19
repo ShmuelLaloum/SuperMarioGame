@@ -69,7 +69,7 @@ public class endLevelScreen extends JPanel {
     }
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        graphics.drawImage(imageBackground.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
+        graphics.drawImage(imageBackground.getImage(), 0, 0, 1540, 941, this);
     }
 
 }

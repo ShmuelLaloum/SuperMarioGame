@@ -285,8 +285,8 @@ public class GameFrame extends JPanel {
     public synchronized void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         Graphics2D g2d = (Graphics2D) graphics.create();
-        g2d.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.LEVEL1_BACKGROUND).getImage(), -imageX, 0, getWidth(), getHeight(), this);
-        g2d.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.LEVEL1_BACKGROUND).getImage(), getWidth() - imageX, 0, getWidth(), getHeight(), this);
+        g2d.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.LEVEL1_BACKGROUND).getImage(), -imageX, 0, 1540, 941, this);
+        g2d.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.LEVEL1_BACKGROUND).getImage(), getWidth() - imageX, 0, 1540, 941, this);
         g2d.drawImage(Coin.imageIcon.getImage(), getWidth() - Coin.width * 2, Coin.height, Coin.width, Coin.height, this);
         g2d.setFont(new Font("Arial", Font.BOLD, 35));
         g2d.setColor(Color.yellow);
