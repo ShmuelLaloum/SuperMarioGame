@@ -19,7 +19,7 @@ public class level1 extends level{
     private Person mario;
     public static final int coinsRequired = 5;
     private int startPointX = 0;
-    private int endPointX = 3000;
+    private int endPointX = 2810;
     public level1() {
         setMario();
         addDefaultPenGoalPoles();
@@ -36,10 +36,10 @@ public class level1 extends level{
         mario = new Person(15,660);
     }
     public void addDefaultPenGoalPoles(){
-        //penGoalPoles.add(new PenGoalPole(1000,0));
+        penGoalPoles.add(new PenGoalPole(2450,300));
     }
     public void addDefaultCastles(){
-        //castles.add(new castle(1200,0));
+        castles.add(new castle(2600,270));
     }
     public void addDefaultBrokenCubes(){
         brokenCubes.add(new brokenCube(220,650));
@@ -47,21 +47,61 @@ public class level1 extends level{
         brokenCubes.add(new brokenCube(310,650));
         brokenCubes.add(new brokenCube(340,650));
 
+        brokenCubes.add(new brokenCube(1840,653));
+        brokenCubes.add(new brokenCube(1900,653));
+
     }
     public void addDefaultLuckyCubes(){
         luckyCubes.add(new luckyCube(280,650, luckyCube.type.redMushroom));
+
+        luckyCubes.add(new luckyCube(850,640, luckyCube.type.coin));
+        luckyCubes.add(new luckyCube(880,640, luckyCube.type.coin));
+        luckyCubes.add(new luckyCube(910,640, luckyCube.type.coin));
+
+        luckyCubes.add(new luckyCube(1810,653, luckyCube.type.coin));
+        luckyCubes.add(new luckyCube(1870,653, luckyCube.type.coin));
+
+
     }
     public void addDefaultGoombas(){
         goombas.add( new goomba(550, 590));
-        goombas.add( new goomba(715, 683));
+        goombas.add( new goomba(720, 683));
         goombas.add( new goomba(1110, 683));
-
+        goombas.add( new goomba(1560, 613));
+        goombas.add( new goomba(1900, 673));
     }
     public void addDefaultCubes(){
         for (int i = 0; i < 800 + 900+3000; i += 30) {
-            cubes.add(new Cube(i, 803, Cube.type.LAND));
-            cubes.add(new Cube(i, 773, Cube.type.LAND));
-            cubes.add(new Cube(i, 743, Cube.type.GRASS));
+            if (i > 1550 && i < 1650){
+                continue;
+            }else if (i > 2070){
+                cubes.add(new Cube(i, 941, Cube.type.LAND));
+                cubes.add(new Cube(i, 920, Cube.type.LAND));
+                cubes.add(new Cube(i, 893, Cube.type.LAND));
+                cubes.add(new Cube(i, 863, Cube.type.LAND));
+                cubes.add(new Cube(i, 833, Cube.type.LAND));
+                cubes.add(new Cube(i, 803, Cube.type.LAND));
+                cubes.add(new Cube(i, 773, Cube.type.LAND));
+                cubes.add(new Cube(i, 743, Cube.type.LAND));
+                cubes.add(new Cube(i, 713, Cube.type.LAND));
+                cubes.add(new Cube(i, 683, Cube.type.LAND));
+                cubes.add(new Cube(i, 653, Cube.type.LAND));
+                cubes.add(new Cube(i, 623, Cube.type.LAND));
+                cubes.add(new Cube(i, 593, Cube.type.LAND));
+                cubes.add(new Cube(i, 563, Cube.type.LAND));
+                cubes.add(new Cube(i, 533, Cube.type.LAND));
+                cubes.add(new Cube(i, 503, Cube.type.LAND));
+                cubes.add(new Cube(i, 473, Cube.type.GRASS));
+            }else {
+                cubes.add(new Cube(i, 941, Cube.type.LAND));
+                cubes.add(new Cube(i, 920, Cube.type.LAND));
+                cubes.add(new Cube(i, 893, Cube.type.LAND));
+                cubes.add(new Cube(i, 863, Cube.type.LAND));
+                cubes.add(new Cube(i, 833, Cube.type.LAND));
+                cubes.add(new Cube(i, 803, Cube.type.LAND));
+                cubes.add(new Cube(i, 773, Cube.type.LAND));
+                cubes.add(new Cube(i, 743, Cube.type.GRASS));
+            }
         }
         cubes.add(new Cube(280,560, Cube.type.WOOD));
         cubes.add(new Cube(500,713, Cube.type.WOOD));
@@ -71,20 +111,39 @@ public class level1 extends level{
         cubes.add(new Cube(560,683, Cube.type.WOOD));
         cubes.add(new Cube(560,653, Cube.type.WOOD));
 
-        cubes.add(new Cube(850,640, Cube.type.WOOD));
-        cubes.add(new Cube(880,640, Cube.type.WOOD));
         cubes.add(new Cube(910,520, Cube.type.WOOD));
-        cubes.add(new Cube(910,640, Cube.type.WOOD));
         cubes.add(new Cube(1100,640, Cube.type.WOOD));
 
+        cubes.add(new Cube(1470,713, Cube.type.WOOD));
+        cubes.add(new Cube(1500,713, Cube.type.WOOD));
+        cubes.add(new Cube(1530,713, Cube.type.WOOD));
+        cubes.add(new Cube(1500,683, Cube.type.WOOD));
+        cubes.add(new Cube(1530,683, Cube.type.WOOD));
+        cubes.add(new Cube(1530,653, Cube.type.WOOD));
 
+        cubes.add(new Cube(1650,713, Cube.type.WOOD));
+        cubes.add(new Cube(1680,713, Cube.type.WOOD));
+        cubes.add(new Cube(1710,713, Cube.type.WOOD));
+        cubes.add(new Cube(1650,683, Cube.type.WOOD));
+        cubes.add(new Cube(1680,683, Cube.type.WOOD));
+        cubes.add(new Cube(1650,653, Cube.type.WOOD));
 
+        cubes.add(new Cube(2010,713, Cube.type.WOOD));
+        cubes.add(new Cube(2040,713, Cube.type.WOOD));
+        cubes.add(new Cube(2070,713, Cube.type.WOOD));
+        cubes.add(new Cube(2040,683, Cube.type.WOOD));
+        cubes.add(new Cube(2070,683, Cube.type.WOOD));
+        cubes.add(new Cube(2070,653, Cube.type.WOOD));
+
+        cubes.add(new Cube(1870,505, Cube.type.WOOD));
+        cubes.add(new Cube(1980,475, Cube.type.WOOD));
 
 
 
     }
     public void addDefaultBillBlasters(){
         billBlasters.add(new BillBlaster(1090,590, BillBlaster.directionBill.left));
+        billBlasters.add(new BillBlaster(2060,603, BillBlaster.directionBill.left));
     }
     public void addDefaultCoins() {
         coins.add(new Coin(280, 528));
@@ -97,7 +156,11 @@ public class level1 extends level{
         coins.add(new Coin(1020, 447));
         coins.add(new Coin(1080, 517));
 
+        coins.add(new Coin(1469, 681));
+        coins.add(new Coin(1499, 651));
 
+        coins.add(new Coin(1840, 711));
+        coins.add(new Coin(1900, 711));
 
     }
     public void addDefaultBigTubes() {
