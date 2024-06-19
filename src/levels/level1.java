@@ -17,7 +17,7 @@ public class level1 extends level{
     private final List<castle> castles = new ArrayList<>();
     private final List<mushroom> mushrooms = new ArrayList<>();
     private Person mario;
-    public static final int coinsRequired = 5;
+    public static final int coinsRequired = 15;
     private int startPointX = 0;
     private int endPointX = 2810;
     public level1() {
