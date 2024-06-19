@@ -332,7 +332,7 @@ public class GameFrame extends JPanel {
 
         if ((startPoint + distance) <= 0 && (endPoint + distance) >= 0) {
             if (inLastHalf || inFirstHalf) {
-                if ((mario.getX() + mario.getWidth() * 2 - distance) <= endPoint) {
+                if ((mario.getX()  - distance) <= endPoint) {
                     mario.setX(mario.getX() - distance);
                     n = true;
                     j = true;
