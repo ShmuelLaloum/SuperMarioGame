@@ -11,8 +11,6 @@ public class window extends JFrame {
         this.setSize(1920,1080);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setResizable(true);
-        this.setLayout(new BorderLayout());
         StartScreen startScreen = new StartScreen(this);
         switchPanel(startScreen);
 
