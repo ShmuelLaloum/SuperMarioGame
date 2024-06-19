@@ -119,6 +119,7 @@ public class GameFrame extends JPanel {
                     }
                 }
             }
+            setActive(false);
             SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC);
             window.switchPanel(new endLevelScreen((mario.isAlive() && collectedCoins >= levelX.getCoinsRequired() ? endLevelScreen.Status.PASS : endLevelScreen.Status.FAIL),levelX,window));
         }).start();
