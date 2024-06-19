@@ -15,11 +15,11 @@ public class levelsMenu extends JLayeredPane {
     private static final ImageIcon level5Image = new ImageIcon("src/gameResources/level5Button.png");
     private static final ImageIcon background = new ImageIcon("src/gameResources/menuBackground.png");
 
-    private static boolean levelIsComplete1 = true;
+    private static boolean levelIsComplete1 = false;
     private static boolean levelIsComplete2 = false;
     private static boolean levelIsComplete3 = false;
     private static boolean levelIsComplete4 = false;
-    private static boolean levelIsComplete5 = true;
+    private static boolean levelIsComplete5 = false;
     private Window window;
 
     public levelsMenu(window window) {

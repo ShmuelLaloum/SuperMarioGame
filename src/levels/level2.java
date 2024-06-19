@@ -19,7 +19,7 @@ public class level2 extends level{
     private Person mario;
     public static final int coinsRequired = 0;//need to change
     private int startPointX = 0;
-    private int endPointX = 0;//need to change
+    private int endPointX = 1900;//need to change
 
     public level2(){
         setMario();
@@ -33,54 +33,63 @@ public class level2 extends level{
         addDefaultBrokenCubes();
         addDefaultCastles();
     }
-    @Override
-    public void setMario() {
-
+    public void setMario(){
+        mario = new Person(15,100);
     }
-
-    @Override
-    public void addDefaultBrokenCubes() {
-
+    public void addDefaultPenGoalPoles(){
+        penGoalPoles.add(new PenGoalPole(1000,0));
     }
-
-    @Override
-    public void addDefaultCastles() {
-
+    public void addDefaultCastles(){
+        castles.add(new castle(1200,0));
     }
-
-    @Override
-    public void addDefaultPenGoalPoles() {
-
+    public void addDefaultBrokenCubes(){
+        brokenCubes.add(new brokenCube(80,200));
     }
-
-    @Override
-    public void addDefaultLuckyCubes() {
-
+    public void addDefaultLuckyCubes(){
+        luckyCubes.add(new luckyCube(80,320, luckyCube.type.redMushroom));
     }
-
-    @Override
-    public void addDefaultGoombas() {
-
+    public void addDefaultGoombas(){
+        //goombas.add( new goomba(730, 0));
     }
-
-    @Override
-    public void addDefaultCubes() {
-
+    public void addDefaultCubes(){
+        for (int i = 0; i < 800 + 900+3000; i += 30) {
+            cubes.add(new Cube(i, 600 - 67, Cube.type.GRASS));
+        }
+        cubes.add(new Cube(50,320, Cube.type.WOOD));
+        cubes.add(new Cube(20,290, Cube.type.WOOD));
+        cubes.add(new Cube(110,320, Cube.type.WOOD));
+        cubes.add(new Cube(80, 470, Cube.type.WOOD));
+        cubes.add(new Cube(180, 450, Cube.type.WOOD));
+        cubes.add(new Cube(230, 400, Cube.type.WOOD));
+        cubes.add(new Cube(120, 400, Cube.type.WOOD));
+        cubes.add(new Cube(280, 350, Cube.type.WOOD));
+        cubes.add(new Cube(330, 350, Cube.type.WOOD));
+        cubes.add(new Cube(430, 350, Cube.type.WOOD));
+        cubes.add(new Cube(480, 350, Cube.type.WOOD));
+        cubes.add(new Cube(480, 300, Cube.type.WOOD));
+        cubes.add(new Cube(530, 250, Cube.type.WOOD));
+        cubes.add(new Cube(580, 250, Cube.type.WOOD));
+        cubes.add(new Cube(630, 250, Cube.type.WOOD));
+        cubes.add(new Cube(680, 250, Cube.type.WOOD));
+        cubes.add(new Cube(730, 250, Cube.type.WOOD));
+        cubes.add(new Cube(780, 250, Cube.type.WOOD));
     }
-
-    @Override
-    public void addDefaultBillBlasters() {
-
+    public void addDefaultBillBlasters(){
+        //billBlasters.add(new BillBlaster(720,200, BillBlaster.directionBill.left));
     }
-
-    @Override
     public void addDefaultCoins() {
-
+        coins.add(new Coin(330, 315));
+        coins.add(new Coin(430, 315));
+        coins.add(new Coin(480, 265));
+        coins.add(new Coin(530, 215));
+        coins.add(new Coin(580, 215));
+        coins.add(new Coin(630, 215));
+        coins.add(new Coin(680, 215));
+        coins.add(new Coin(730, 215));
+        coins.add(new Coin(780, 215));
     }
-
-    @Override
     public void addDefaultBigTubes() {
-
+        bigTubes.add(new bigTube(300, 450, 80, 130, bigTube.type.enemy));
     }
     public void setStartPointX(int newStartPointX) {
         startPointX = newStartPointX;
