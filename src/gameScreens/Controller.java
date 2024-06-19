@@ -53,35 +53,37 @@ public class Controller implements KeyListener {
 
     private void updateMovement() {
         new Thread(()->{
-            while (active){
-                if (jumpPressed) {
-                    if (rightPressed) {
-                        if (mario.isCanGoRight()) {
+            while (mario.isAlive()) {
+                if (active) {
+                    if (jumpPressed) {
+                        if (rightPressed) {
+                            if (mario.isCanGoRight()) {
+                                mario.moveRight();
+                                gameFrame.moveScreen(-Person.walkingDistance);
+                            }
+                            mario.jump();
+                        } else if (leftPressed) {
+                            if (mario.isCanGoLeft()) {
+                                mario.moveLeft();
+                                gameFrame.moveScreen(Person.walkingDistance);
+                            }
+                            mario.jump();
+                        } else {
+                            mario.jump();
+                        }
+                    } else {
+                        if (rightPressed && mario.isCanGoRight()) {
                             mario.moveRight();
                             gameFrame.moveScreen(-Person.walkingDistance);
-                        }
-                        mario.jump();
-                    } else if (leftPressed) {
-                        if (mario.isCanGoLeft()) {
+                        } else if (leftPressed && mario.isCanGoLeft()) {
                             mario.moveLeft();
                             gameFrame.moveScreen(Person.walkingDistance);
                         }
-                        mario.jump();
-                    } else {
-                        mario.jump();
-                    }
-                } else {
-                    if (rightPressed && mario.isCanGoRight()) {
-                        mario.moveRight();
-                        gameFrame.moveScreen(-Person.walkingDistance);
-                    } else if (leftPressed && mario.isCanGoLeft()) {
-                        mario.moveLeft();
-                        gameFrame.moveScreen(Person.walkingDistance);
                     }
                 }
                 try {
                     Thread.sleep(30);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }

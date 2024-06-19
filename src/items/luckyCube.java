@@ -12,8 +12,10 @@ public class luckyCube extends Cube{
     private boolean taken = false;
     private type throwing;
     private int up = 0;
+    private boolean active;
     public luckyCube(int x, int y, type type) {
         super(x, y, Cube.type.OTHER);
+        active = true;
         setImage(ImageManager.getImageIcon(ImageManager.ImageName.LUCKY_CUBE));
         throwing = type;
     }
@@ -39,18 +41,21 @@ public class luckyCube extends Cube{
         new Thread(()->{
             int sum = 0;
             while (sum < 40){
-                if (sum < 20) {
-                    up -= 1;
-                }else {
-                    up += 1;
-                }
+                if (active) {
+                    if (sum < 20) {
+                        up -= 1;
+                    } else {
+                        up += 1;
+                    }
 
-                sum++;
+                    sum++;
+                }
 
                 try {
                     Thread.sleep(2);
-                }catch (Exception e){
+                } catch (Exception e) {
                 }
+
             }
         }).start();
         return throwItem;
@@ -60,5 +65,8 @@ public class luckyCube extends Cube{
     }
     public luckyCube clone() throws CloneNotSupportedException{
         return (luckyCube) super.clone();
+    }
+    public void setActive(boolean newActive){
+        active = newActive;
     }
 }

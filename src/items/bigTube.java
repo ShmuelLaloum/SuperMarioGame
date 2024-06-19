@@ -85,4 +85,9 @@ public class bigTube implements groundAble, Cloneable{
             temp.carnivorousPlant = carnivorousPlant.clone();
         return temp;
     }
+    public void setActive(boolean newActive){
+        if (carnivorousPlant != null) {
+            carnivorousPlant.setActive(newActive);
+        }
+    }
 }

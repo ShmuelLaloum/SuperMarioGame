@@ -15,6 +15,7 @@ public class level1 extends level{
     private final List<brokenCube> brokenCubes = new ArrayList<>();
     private final List<PenGoalPole> penGoalPoles = new ArrayList<>();
     private final List<castle> castles = new ArrayList<>();
+    private final List<mushroom> mushrooms = new ArrayList<>();
     private Person mario;
     public static final int coinsRequired = 5;
     private int startPointX = 0;
@@ -87,7 +88,7 @@ public class level1 extends level{
         coins.add(new Coin(780, 215));
     }
     public void addDefaultBigTubes() {
-        bigTubes.add(new bigTube(300, 450, 80, 130, bigTube.type.ground));
+        bigTubes.add(new bigTube(300, 450, 80, 130, bigTube.type.enemy));
     }
 
     public void setStartPointX(int newStartPointX) {
@@ -98,6 +99,9 @@ public class level1 extends level{
     }
     public Person getMario(){
         return mario;
+    }
+    public List<mushroom> getMushrooms(){
+        return mushrooms;
     }
     public List<Coin> getCoins() {
         return coins;

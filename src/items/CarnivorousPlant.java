@@ -12,12 +12,14 @@ public class CarnivorousPlant implements enemyAble, Cloneable{
     private int y;
     private int width; //50;
     private int height; //50;
+    private boolean active;
 
     public CarnivorousPlant(int x, int y,int width,int height){
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        active = true;
         up = (int)(height);
         moveUpAndDown();
     }
@@ -32,15 +34,17 @@ public class CarnivorousPlant implements enemyAble, Cloneable{
             int sum = 0;
             int g = 1;
             while (true){
-                if (sum % up == 0){
-                    g *=-1;
-                    sum = 0;
+                if (active) {
+                    if (sum % up == 0) {
+                        g *= -1;
+                        sum = 0;
+                    }
+                    y += g;
+                    sum++;
                 }
-                y+=g;
-                sum++;
                 try {
                     Thread.sleep(30);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
@@ -60,5 +64,8 @@ public class CarnivorousPlant implements enemyAble, Cloneable{
     }
     public CarnivorousPlant clone() throws CloneNotSupportedException{
         return (CarnivorousPlant)super.clone();
+    }
+    public void setActive(boolean newActive){
+        active = newActive;
     }
 }

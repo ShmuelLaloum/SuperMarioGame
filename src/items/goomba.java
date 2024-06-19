@@ -18,10 +18,12 @@ public class goomba implements enemyAble,needLandAble, Cloneable {
     private int direction = -1;
     private boolean running = true;
     private boolean alive;
+    private boolean active;
     public goomba(int x, int y){
         this.x = x;
         this.y = y;
         alive = true;
+        active = true;
         imageIcon = ImageManager.getImageIcon(ImageManager.ImageName.GOOMBA_GO_LEFT);
         move();
         LandUpdate();
@@ -35,11 +37,12 @@ public class goomba implements enemyAble,needLandAble, Cloneable {
     public void move(){
         new Thread(()->{
             while (running) {
-                this.x+=direction;
+                if (active) {
+                    this.x += direction;
+                }
                 try {
                     Thread.sleep(50);
-                }catch (Exception e){
-
+                } catch (Exception e) {
                 }
             }
         }).start();
@@ -86,18 +89,20 @@ public class goomba implements enemyAble,needLandAble, Cloneable {
     public void LandUpdate(){
         new Thread(()->{
             while (isAlive()){
-                if ( y < Ground){
-                    y++;
+                if (active) {
+                    if (y < Ground) {
+                        y++;
+                    }
                 }
                 try {
                     Thread.sleep(2);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
             }
         }).start();
     }
-    public void  setGround(int newG){
+    public void setGround(int newG){
         this.Ground = newG;
     }
     public int getHeight(){
@@ -111,5 +116,8 @@ public class goomba implements enemyAble,needLandAble, Cloneable {
     }
     public goomba clone() throws CloneNotSupportedException{
         return (goomba)super.clone();
+    }
+    public void setActive(boolean newActive){
+        active = newActive;
     }
 }

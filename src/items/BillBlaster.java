@@ -17,10 +17,12 @@ public class BillBlaster implements groundAble,needLandAble, Cloneable{
     private boolean Finsh = false;
     private int ground;
     private BulletBill bullet;
+    private boolean active;
 
     public BillBlaster(int x, int y, directionBill directionBill){
         this.x = x;
         this.y = y;
+        active = true;
         direction = directionBill == BillBlaster.directionBill.right ? -1 : 1;
         bullet = new BulletBill(direction == -1 ? x+30 : x,y,directionBill);
         moveBall();
@@ -34,12 +36,14 @@ public class BillBlaster implements groundAble,needLandAble, Cloneable{
     public void moveBall(){
         new Thread(()->{
             while (true){
-                if (distance % 300 == 0){
-                    distance = direction == -1 ? -6 : 6;
-                    bullet.setY(y);
+                if (active) {
+                    if (distance % 300 == 0) {
+                        distance = direction == -1 ? -6 : 6;
+                        bullet.setY(y);
+                    }
+                    distance += direction;
+                    bullet.setX((direction == -1 ? x + 30 : x) - distance);
                 }
-                distance+=direction;
-                bullet.setX((direction == -1 ? x+30 : x )-distance);
                 try {
                     Thread.sleep(20);
                 }catch (Exception e){
@@ -66,13 +70,15 @@ public class BillBlaster implements groundAble,needLandAble, Cloneable{
     public void LandUpdate() {
         new Thread(()->{
             while (true){
-                if ( y < ground){
-                    y++;
-                }
-                try {
-                    Thread.sleep(2);
-                }catch (Exception e){
+                if (active) {
+                    if (y < ground) {
+                        y++;
+                    }
+                    try {
+                        Thread.sleep(2);
+                    } catch (Exception e) {
 
+                    }
                 }
             }
         }).start();
@@ -106,5 +112,8 @@ public class BillBlaster implements groundAble,needLandAble, Cloneable{
         BillBlaster temp = (BillBlaster) super.clone();
         temp.bullet = bullet.clone();
         return temp;
+    }
+    public void setActive(boolean newActive){
+        active = newActive;
     }
 }

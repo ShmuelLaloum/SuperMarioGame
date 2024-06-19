@@ -19,7 +19,7 @@ public class GameFrame extends JPanel {
     private ArrayList<enemyAble> enemyAbles = new ArrayList<>();
     private ArrayList<groundAble> groundAbles = new ArrayList<>();
     private ArrayList<needLandAble> needLandAbles = new ArrayList<>();
-    private ArrayList<mushroom> mushrooms =  new ArrayList<>();
+    private List<mushroom> mushrooms =  new ArrayList<>();
     private List<Coin> coins = new ArrayList<>();
     private List<bigTube> bigTubes = new ArrayList<>();
     private List<BillBlaster> billBlasters = new ArrayList<>();
@@ -33,22 +33,23 @@ public class GameFrame extends JPanel {
     private final level levelX;
     private final window window;
     private boolean stop = false;
+    private Controller controller;
     public GameFrame(level level, window window) {
         this.setLayout(null);
         SoundManager.loopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC,-10.0f);
         this.setFocusable(true);
         this.levelX = level;
         this.window = window;
-        setupGameObjects();
 
         JButton pauseButton = new JButton();
         pauseButton.setBounds(500,90,90,90);
         pauseButton.addActionListener(e -> {
             this.setLayout(new BorderLayout());
-            stop = true;
+            setActive(false);
             levelX.setEndPointX(endPoint);
             levelX.setStartPointX(startPoint);
             this.add(new PauseMenuScreen(levelX,window));
+            this.remove(pauseButton);
             this.revalidate();
             this.repaint();
         });
@@ -62,7 +63,10 @@ public class GameFrame extends JPanel {
             }
         });
         timer.start();
-        this.addKeyListener(new Controller(mario,this));
+        setupGameObjects();
+        controller = new Controller(mario,this);
+        setActive(true);
+        this.addKeyListener(controller);
         this.mainGameLoop();
     }
     private void setupGameObjects(){
@@ -73,6 +77,7 @@ public class GameFrame extends JPanel {
         this.goombas = levelX.getGoombas();
         this.brokenCubes = levelX.getBrokenCubes();
         this.luckyCubes = levelX.getLuckyCubes();
+        this.mushrooms = levelX.getMushrooms();
         this.billBlasters = levelX.getBillBlasters();
         this.bigTubes = levelX.getBigTubes();
         this.castles = levelX.getCastles();
@@ -87,6 +92,7 @@ public class GameFrame extends JPanel {
         needLandAbles.addAll(goombas);
         needLandAbles.addAll(penGoalPoles);
         needLandAbles.addAll(castles);
+        needLandAbles.addAll(mushrooms);
 
         enemyAbles.addAll(goombas);
         for (BillBlaster b : billBlasters)
@@ -106,11 +112,11 @@ public class GameFrame extends JPanel {
                 if (!stop) {
                     updateGameObjects();
                     this.repaint();
-                }
-                try {
-                    Thread.sleep(2);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    try {
+                        Thread.sleep(2);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC);
@@ -372,5 +378,22 @@ public class GameFrame extends JPanel {
             startPoint += distance;
             endPoint += distance;
         }
+    }
+    public void setActive(boolean newActive){
+        this.stop = !newActive;
+        this.controller.setActive(newActive);
+        mario.setActive(newActive);
+        for (Coin c : coins)
+            c.setActive(newActive);
+        for (goomba g : goombas)
+            g.setActive(newActive);
+        for (BillBlaster b : billBlasters)
+            b.setActive(newActive);
+        for (bigTube b : bigTubes)
+            b.setActive(newActive);
+        for (luckyCube l : luckyCubes)
+            l.setActive(newActive);
+        for (mushroom m : mushrooms)
+            m.setActive(newActive);
     }
 }

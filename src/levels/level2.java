@@ -15,6 +15,7 @@ public class level2 extends level{
     private final List<brokenCube> brokenCubes = new ArrayList<>();
     private final List<PenGoalPole> penGoalPoles = new ArrayList<>();
     private final List<castle> castles = new ArrayList<>();
+    private final List<mushroom> mushrooms = new ArrayList<>();
     private Person mario;
     public static final int coinsRequired = 0;//need to change
     private int startPointX = 0;
@@ -87,7 +88,9 @@ public class level2 extends level{
     public void setEndPointX(int newEndPointX) {
         endPointX = newEndPointX;
     }
-
+    public List<mushroom> getMushrooms(){
+        return mushrooms;
+    }
     public Person getMario(){
         return mario;
     }

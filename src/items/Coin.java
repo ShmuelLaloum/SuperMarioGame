@@ -15,10 +15,12 @@ public class Coin implements Cloneable{
     private boolean startCollected = false;
     private boolean finishedCollected = false;
     public static final ImageIcon imageIcon = new ImageIcon("src/gameResources/coin.png");
+    private boolean active;
 
     public Coin(int x, int y){
         this.x = x;
         this.y = y;
+        active = true;
     }
     public void paint(Graphics graphics) {
         Graphics2D g2d = (Graphics2D) graphics.create();
@@ -42,18 +44,19 @@ public class Coin implements Cloneable{
             SoundManager.playSound(SoundManager.SoundName.MARIO_COLLECTS_COIN,-15.0f);
             int sum = 0;
             while (x < 1500 /*705*/ || y > 60) {
-                if (x < 1500){
-                    x++;
-                    sum++;
-                }
-                if (y > 60 && sum == 2 || x == 1500){
-                    y--;
-                    sum = 0;
+                if (active) {
+                    if (x < 1500) {
+                        x++;
+                        sum++;
+                    }
+                    if (y > 60 && sum == 2 || x == 1500) {
+                        y--;
+                        sum = 0;
+                    }
                 }
                 try {
                     Thread.sleep(2);
-                }catch (Exception e){
-
+                } catch (Exception e) {
                 }
             }
             finishedCollected = true;
@@ -69,21 +72,27 @@ public class Coin implements Cloneable{
         new Thread(()->{
             int sum = 0;
             while (sum < 100){
-                if (sum < 50){
-                    y--;
-                }else {
-                    y++;
+                if (active) {
+                    if (sum < 50) {
+                        y--;
+                    } else {
+                        y++;
+                    }
+                    sum++;
                 }
-                sum++;
                 try {
                     Thread.sleep(2);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                 }
+
             }
         }).start();
     }
     public Coin clone() throws CloneNotSupportedException{
         return (Coin)super.clone();
+    }
+    public void setActive(boolean newActive){
+        active = newActive;
     }
 }

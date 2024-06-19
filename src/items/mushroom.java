@@ -15,11 +15,13 @@ public class mushroom implements needLandAble {
     public static final int width = 35;
     public static final int height = 35;
     private int direction = -1;
+    private boolean active;
 
     public mushroom(int x, int y,type type){
         this.x = x;
         this.y = y;
         Ground = y;
+        active = true;
         imageIcon = ImageManager.getImageIcon(ImageManager.ImageName.MUSHROOM_RED);
         LandUpdate();
         move();
@@ -33,32 +35,39 @@ public class mushroom implements needLandAble {
     public void LandUpdate() {
         new Thread(()->{
             while (true){
-                if ( y < Ground){
-                    y++;
+                if (active) {
+                    if (y < Ground) {
+                        y++;
+                    }
                 }
                 try {
                     Thread.sleep(2);
-                }catch (Exception e){
-
+                } catch (Exception e) {
                 }
+
             }
         }).start();
     }
     public void move(){
         new Thread(()->{
             while (true) {
-                this.x+=direction;
+                if (active) {
+                    this.x += direction;
+                }
                 try {
                     Thread.sleep(30);
-                }catch (Exception e){
-
+                } catch (Exception e) {
                 }
+
             }
         }).start();
     }
     public void ChangeDirection() {
         x += direction < 0 ? 4 : -4;
         direction *= -1;
+    }
+    public void setActive(boolean newActive){
+        active = newActive;
     }
 
 

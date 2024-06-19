@@ -30,12 +30,14 @@ public class Person implements needLandAble,Cloneable{
     private options status;
     private boolean touchGround = false;
     private boolean CanGoLeft = true,CanGoRight = true,CanJump= true;
+    private boolean active;
 
     public Person(int x, int y) {
         status = options.NORMAL;
         this.x = x;
         this.y = y;
         this.alive = true;
+        active = true;
         image = ImageManager.getImageIcon(ImageManager.ImageName.MARIO_GOES_RIGHT);//imageMarioGoesRight;
         //updateGroundBasedOnClosestCube();
         LandUpdate();
@@ -80,21 +82,17 @@ public class Person implements needLandAble,Cloneable{
                 SoundManager.playSound(SoundManager.SoundName.MARIO_JUMP,-10.0f);
                 int sum = 0;
                 while ((sum < jumpHeight )) {
-                    if (sum < (jumpHeight / 2) && CanJump && alive) {
-                        y--;
-                    }else {
-                        /*if (y < ground) {
-                            y++;
+                    if (active) {
+                        if (sum < (jumpHeight / 2) && CanJump && alive) {
+                            y--;
                         } else {
                             break;
-                        }*/
-                        break;
-
-                    }
-                    sum++;
-                    try {
-                        Thread.sleep(2);
-                    } catch (Exception ignored) {
+                        }
+                        sum++;
+                        try {
+                            Thread.sleep(2);
+                        } catch (Exception ignored) {
+                        }
                     }
                 }
                 image = image == ImageManager.getImageIcon(ImageManager.ImageName.MARIO_JUMPS_LEFT) ? ImageManager.getImageIcon(ImageManager.ImageName.MARIO_GOES_LEFT) : ImageManager.getImageIcon(ImageManager.ImageName.MARIO_GOES_RIGHT);;
@@ -124,7 +122,6 @@ public class Person implements needLandAble,Cloneable{
             //this.x+=walkingDistance;
             //s1.moveScreen(-walkingDistance);
         }
-
     }
 
     public void die(int heightFrame){
@@ -132,16 +129,19 @@ public class Person implements needLandAble,Cloneable{
         this.alive = false;
         Thread n = new Thread(() -> {
             int sum = 0;
-            while (this.y <= heightFrame){
-                y++;
-                clarity =  sum%5 == 0 ? 1f : 0.5f;
-                try {
-                    Thread.sleep(120);
-                } catch (Exception ignored) {
+            while (this.y <= heightFrame) {
+                if (active) {
+                    y++;
+                    clarity = sum % 5 == 0 ? 1f : 0.5f;
+                    try {
+                        Thread.sleep(120);
+                    } catch (Exception ignored) {
+                    }
+                    sum++;
                 }
-                sum++;
             }
             outOfFrame = true;
+
         });
         n.start();
 
@@ -245,20 +245,22 @@ public class Person implements needLandAble,Cloneable{
         new Thread(()->{
             boolean k = false;
             while (isAlive()){
-                if (!heJumps && y < ground){
-                    if (!k)
-                        image = image == imageMarioGoesLeft ? imageMarioJumpsLeft : image == imageMarioGoesRight ?imageMarioJumpsRight : image;
-                    y++;
-                    k = true;
-                    touchGround = false;
-                }else if (k){
-                    image = image == imageMarioJumpsLeft ? imageMarioGoesLeft : image == imageMarioJumpsRight ? imageMarioGoesRight : image;
-                    k = false;
-                    touchGround = true;
+                if (active) {
+                    if (!heJumps && y < ground) {
+                        if (!k)
+                            image = image == imageMarioGoesLeft ? imageMarioJumpsLeft : image == imageMarioGoesRight ? imageMarioJumpsRight : image;
+                        y++;
+                        k = true;
+                        touchGround = false;
+                    } else if (k) {
+                        image = image == imageMarioJumpsLeft ? imageMarioGoesLeft : image == imageMarioJumpsRight ? imageMarioGoesRight : image;
+                        k = false;
+                        touchGround = true;
+                    }
                 }
                 try {
                     Thread.sleep(3);
-                }catch (Exception e){
+                } catch (Exception e) {
                 }
             }
         }).start();
@@ -307,6 +309,9 @@ public class Person implements needLandAble,Cloneable{
     }
     public Person clone() throws CloneNotSupportedException{
         return (Person)super.clone();
+    }
+    public void setActive(boolean newActive){
+        active = newActive;
     }
 
 }

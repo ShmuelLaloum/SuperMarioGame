@@ -14,6 +14,7 @@ public class level4 extends level{
     private final List<luckyCube> luckyCubes = new ArrayList<>();
     private final List<brokenCube> brokenCubes = new ArrayList<>();
     private final List<PenGoalPole> penGoalPoles = new ArrayList<>();
+    private final List<mushroom> mushrooms = new ArrayList<>();
     private final List<castle> castles = new ArrayList<>();
     private Person mario;
     public static final int coinsRequired = 0;//need to change
@@ -84,6 +85,7 @@ public class level4 extends level{
     public void setStartPointX(int newStartPointX) {
         startPointX = newStartPointX;
     }
+
     public void setEndPointX(int newEndPointX) {
         endPointX = newEndPointX;
     }
@@ -92,6 +94,9 @@ public class level4 extends level{
     }
     public List<Coin> getCoins() {
         return coins;
+    }
+    public List<mushroom> getMushrooms(){
+        return mushrooms;
     }
     public List<bigTube> getBigTubes() {
         return bigTubes;
