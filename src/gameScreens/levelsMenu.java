@@ -7,12 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class levelsMenu extends JLayeredPane {
-    private static final ImageIcon lockedLevel = new ImageIcon("C:/Users/ASUS/Desktop/mario project/lockedLevel.png");
+    private static final ImageIcon lockedLevel = new ImageIcon("src/gameResources/lockedLevel.png");
     private static final ImageIcon level1Image = new ImageIcon("src/gameResources/level1Button.png");
-    private static final ImageIcon level2Image = new ImageIcon("C:/Users/ASUS/Desktop/mario project/level2Button.png");
-    private static final ImageIcon level3Image = new ImageIcon("C:/Users/ASUS/Desktop/mario project/level3Button.png");
-    private static final ImageIcon level4Image = new ImageIcon("C:/Users/ASUS/Desktop/mario project/level4Button.png");
-    private static final ImageIcon level5Image = new ImageIcon("C:/Users/ASUS/Desktop/mario project/level5Button.png");
+    private static final ImageIcon level2Image = new ImageIcon("src/gameResources/level2Button.png");
+    private static final ImageIcon level3Image = new ImageIcon("src/gameResources/level3Button.png");
+    private static final ImageIcon level4Image = new ImageIcon("src/gameResources/level4Button.png");
+    private static final ImageIcon level5Image = new ImageIcon("src/gameResources/level5Button.png");
     private static final ImageIcon background = new ImageIcon("src/gameResources/menuBackground.png");
 
     private static boolean levelIsComplete1 = true;
@@ -20,7 +20,7 @@ public class levelsMenu extends JLayeredPane {
     private static boolean levelIsComplete3 = false;
     private static boolean levelIsComplete4 = false;
     private static boolean levelIsComplete5 = true;
-    private window window;
+    private Window window;
 
     public levelsMenu(window window) {
         this.window = window;
@@ -30,7 +30,6 @@ public class levelsMenu extends JLayeredPane {
         Image resizedLevel3Image = ImageManager.getImageIcon(ImageManager.ImageName.LEVEL3_BUTTON).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
         Image resizedLevel4Image = ImageManager.getImageIcon(ImageManager.ImageName.LEVEL4_BUTTON).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
         Image resizedLevel5Image = ImageManager.getImageIcon(ImageManager.ImageName.LEVEL5_BUTTON).getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-
 
         JButton level1Button = new JButton();
         level1Button.setBounds(175, 390, 70, 70);
@@ -59,7 +58,7 @@ public class levelsMenu extends JLayeredPane {
         this.add(level2Button, JLayeredPane.DEFAULT_LAYER);
 
         level2Button.addActionListener(event -> {
-            if (isLevelIsComplete(new level1())){
+            if (isLevelIsComplete(new level1())) {
                 makeSureToStart makeSureToStart = new makeSureToStart(window, new level2());
                 this.add(makeSureToStart, JLayeredPane.PALETTE_LAYER);
                 disableAllButtons();
@@ -78,7 +77,7 @@ public class levelsMenu extends JLayeredPane {
         this.add(level3Button, JLayeredPane.DEFAULT_LAYER);
 
         level3Button.addActionListener(event -> {
-            if (isLevelIsComplete(new level2())){
+            if (isLevelIsComplete(new level2())) {
                 makeSureToStart makeSureToStart = new makeSureToStart(window, new level3());
                 this.add(makeSureToStart, JLayeredPane.PALETTE_LAYER);
                 disableAllButtons();
@@ -96,7 +95,7 @@ public class levelsMenu extends JLayeredPane {
         level4Button.setIcon(new ImageIcon(resizedLevel4Image));
         this.add(level4Button, JLayeredPane.DEFAULT_LAYER);
         level4Button.addActionListener(event -> {
-            if (isLevelIsComplete(new level3())){
+            if (isLevelIsComplete(new level3())) {
                 makeSureToStart makeSureToStart = new makeSureToStart(window, new level4());
                 this.add(makeSureToStart, JLayeredPane.PALETTE_LAYER);
                 disableAllButtons();
@@ -114,7 +113,7 @@ public class levelsMenu extends JLayeredPane {
         level5Button.setIcon(new ImageIcon(resizedLevel5Image));
         this.add(level5Button, JLayeredPane.DEFAULT_LAYER);
         level5Button.addActionListener(event -> {
-            if (isLevelIsComplete(new level4())){
+            if (isLevelIsComplete(new level4())) {
                 makeSureToStart makeSureToStart = new makeSureToStart(window, new level5());
                 this.add(makeSureToStart, JLayeredPane.PALETTE_LAYER);
                 disableAllButtons();
@@ -122,7 +121,6 @@ public class levelsMenu extends JLayeredPane {
                 this.repaint();
             }
         });
-
     }
 
     public void paintComponent(Graphics graphics) {
@@ -139,7 +137,8 @@ public class levelsMenu extends JLayeredPane {
             case null, default -> levelIsComplete5;
         };
     }
-    public static void setLevelIsComplete(level level ,boolean status) {
+
+    public static void setLevelIsComplete(level level, boolean status) {
         switch (level) {
             case level1 level1 -> levelIsComplete1 = status;
             case level2 level2 -> levelIsComplete2 = status;
@@ -148,7 +147,8 @@ public class levelsMenu extends JLayeredPane {
             case null, default -> levelIsComplete5 = status;
         }
     }
-    public static level getNextLevel(level level){
+
+    public static level getNextLevel(level level) {
         switch (level) {
             case level1 level1 -> {
                 return new level2();
@@ -162,13 +162,15 @@ public class levelsMenu extends JLayeredPane {
             case level4 level4 -> {
                 return new level5();
             }
-            case null, default -> {return null;
+            case null, default -> {
+                return null;
             }
         }
     }
-    public static level resetLevel(level level){
+
+    public static level resetLevel(level level) {
         switch (level) {
-            case levels.level1 level1 -> {
+            case level1 level1 -> {
                 return new level1();
             }
             case level2 level2 -> {
@@ -185,6 +187,7 @@ public class levelsMenu extends JLayeredPane {
             }
         }
     }
+
     public void disableAllButtons() {
         for (Component component : this.getComponents()) {
             if (component instanceof JButton) {
@@ -192,6 +195,7 @@ public class levelsMenu extends JLayeredPane {
             }
         }
     }
+
     public void enableAllButtons() {
         for (Component component : this.getComponents()) {
             if (component instanceof JButton) {
@@ -199,11 +203,13 @@ public class levelsMenu extends JLayeredPane {
             }
         }
     }
+
     public void moveToFront(Component component) {
         this.setLayer(component, JLayeredPane.PALETTE_LAYER);
         component.setVisible(true);
         component.repaint();
     }
+
     public Dimension getPreferredSize() {
         // Ensure the panel is the same size as the window
         return new Dimension(1920, 1080);

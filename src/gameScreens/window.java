@@ -11,13 +11,13 @@ public class window extends JFrame {
         this.setSize(1920,1080);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.getContentPane().setPreferredSize(new Dimension(1920, 1080));
         StartScreen startScreen = new StartScreen(this);
         switchPanel(startScreen);
-        this.getContentPane().setPreferredSize(new Dimension(1920, 1080));
+
 
 
         //switchPanel(new GameFrame(new level1(),this));
-        this.pack();
         this.setVisible(true);
     }
     public void switchPanel(JPanel newPanel) {
