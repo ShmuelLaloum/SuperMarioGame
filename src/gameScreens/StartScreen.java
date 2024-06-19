@@ -52,10 +52,6 @@ public class StartScreen extends JPanel {
 
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        graphics.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.LOGIN_SCREEN_BACKGROUND).getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
-    }
-    public Dimension getPreferredSize() {
-        // Ensure the panel is the same size as the window
-        return new Dimension(1920, 1080);
+        graphics.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.LOGIN_SCREEN_BACKGROUND).getImage(), 0, 0, 1540, 941, this);
     }
 }

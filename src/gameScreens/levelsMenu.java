@@ -125,7 +125,7 @@ public class levelsMenu extends JLayeredPane {
 
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        graphics.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.LEVELS_MENU_SCREEN_BACKGROUND).getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
+        graphics.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.LEVELS_MENU_SCREEN_BACKGROUND).getImage(), 0, 0, 1540, 941, this);
     }
 
     public static boolean isLevelIsComplete(level level) {
@@ -208,10 +208,5 @@ public class levelsMenu extends JLayeredPane {
         this.setLayer(component, JLayeredPane.PALETTE_LAYER);
         component.setVisible(true);
         component.repaint();
-    }
-
-    public Dimension getPreferredSize() {
-        // Ensure the panel is the same size as the window
-        return new Dimension(1920, 1080);
     }
 }
