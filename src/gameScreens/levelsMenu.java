@@ -204,4 +204,8 @@ public class levelsMenu extends JLayeredPane {
         component.setVisible(true);
         component.repaint();
     }
+    public Dimension getPreferredSize() {
+        // Ensure the panel is the same size as the window
+        return new Dimension(1920, 1080);
+    }
 }
