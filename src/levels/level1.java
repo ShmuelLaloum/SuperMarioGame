@@ -52,7 +52,7 @@ public class level1 extends level{
     }
     public void addDefaultGoombas(){
         goombas.add( new goomba(425, 444));
-        goombas.add( new goomba(240, 235));
+        goombas.add( new goomba(245, 238));
         goombas.add( new goomba(630, 670));
         goombas.add( new goomba(900, 670));
         goombas.add( new goomba(1100, 670));
