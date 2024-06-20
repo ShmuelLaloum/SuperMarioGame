@@ -15,7 +15,7 @@ public class makeSureToStart extends JPanel {
     private static final ImageIcon background = new ImageIcon("src/gameResources/backgroundWaiting.png");
     public makeSureToStart(window window, level level){
         this.setLayout(null);
-        this.setBounds(350,150,800,600);
+        this.setBounds(150,50,1250,750);
         this.setOpaque(false);
         Image resizedPlayImage = ImageManager.getImageIcon(ImageManager.ImageName.PLAY_BUTTON_BACKGROUND).getImage().getScaledInstance(100, 40, Image.SCALE_SMOOTH);
         Image resizedBackImage = ImageManager.getImageIcon(ImageManager.ImageName.BACK_BUTTON_BACKGROUND).getImage().getScaledInstance(100, 40, Image.SCALE_SMOOTH);
@@ -29,7 +29,7 @@ public class makeSureToStart extends JPanel {
         */
 
         JButton startGame = new JButton();
-        startGame.setBounds(450,500,100,40);
+        startGame.setBounds(680,615,100,40);
         startGame.setOpaque(false);
         startGame.setContentAreaFilled(false);
         startGame.setBorderPainted(false);
@@ -42,7 +42,7 @@ public class makeSureToStart extends JPanel {
         });
 
         JButton back = new JButton();
-        back.setBounds(250,500,100,40);
+        back.setBounds(430,615,100,40);
         back.setOpaque(false);
         back.setContentAreaFilled(false);
         back.setBorderPainted(false);
