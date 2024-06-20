@@ -17,9 +17,9 @@ public class level1 extends level{
     private final List<castle> castles = new ArrayList<>();
     private final List<mushroom> mushrooms = new ArrayList<>();
     private Person mario;
-    public static final int coinsRequired = 15;
+    public static final int coinsRequired = 20;
     private int startPointX = 0;
-    private int endPointX = 2810;
+    private int endPointX = 2620;
     public level1() {
         setMario();
         addDefaultPenGoalPoles();
@@ -36,137 +36,144 @@ public class level1 extends level{
         mario = new Person(15,660);
     }
     public void addDefaultPenGoalPoles(){
-        penGoalPoles.add(new PenGoalPole(2450,300));
+        penGoalPoles.add(new PenGoalPole(2180,583));
     }
     public void addDefaultCastles(){
-        castles.add(new castle(2600,270));
+        castles.add(new castle(2300,513));
     }
     public void addDefaultBrokenCubes(){
-        brokenCubes.add(new brokenCube(220,650));
-        brokenCubes.add(new brokenCube(250,650));
-        brokenCubes.add(new brokenCube(310,650));
-        brokenCubes.add(new brokenCube(340,650));
-
-        brokenCubes.add(new brokenCube(1840,653));
-        brokenCubes.add(new brokenCube(1900,653));
-
+        brokenCubes.add(new brokenCube(205,200));
+        brokenCubes.add(new brokenCube(235,200));
     }
     public void addDefaultLuckyCubes(){
-        luckyCubes.add(new luckyCube(280,650, luckyCube.type.redMushroom));
-
-        luckyCubes.add(new luckyCube(850,640, luckyCube.type.coin));
-        luckyCubes.add(new luckyCube(880,640, luckyCube.type.coin));
-        luckyCubes.add(new luckyCube(910,640, luckyCube.type.coin));
-
-        luckyCubes.add(new luckyCube(1810,653, luckyCube.type.coin));
-        luckyCubes.add(new luckyCube(1870,653, luckyCube.type.coin));
-
-
+        luckyCubes.add(new luckyCube(460,365, luckyCube.type.coin));
+        luckyCubes.add(new luckyCube(415,80, luckyCube.type.coin));
+        luckyCubes.add(new luckyCube(1300,660, luckyCube.type.redMushroom));
     }
     public void addDefaultGoombas(){
-        goombas.add( new goomba(550, 590));
-        goombas.add( new goomba(720, 683));
-        goombas.add( new goomba(1110, 683));
-        goombas.add( new goomba(1560, 613));
-        goombas.add( new goomba(1900, 673));
+        goombas.add( new goomba(425, 444));
+        goombas.add( new goomba(240, 235));
+        goombas.add( new goomba(630, 670));
+        goombas.add( new goomba(900, 670));
+        goombas.add( new goomba(1100, 670));
+        goombas.add( new goomba(1530, 670));
     }
     public void addDefaultCubes(){
-        for (int i = 0; i < 800 + 900+3000; i += 30) {
-            if (i > 1550 && i < 1650){
-                continue;
-            }else if (i > 2070){
-                cubes.add(new Cube(i, 941, Cube.type.LAND));
-                cubes.add(new Cube(i, 920, Cube.type.LAND));
-                cubes.add(new Cube(i, 893, Cube.type.LAND));
-                cubes.add(new Cube(i, 863, Cube.type.LAND));
-                cubes.add(new Cube(i, 833, Cube.type.LAND));
-                cubes.add(new Cube(i, 803, Cube.type.LAND));
-                cubes.add(new Cube(i, 773, Cube.type.LAND));
-                cubes.add(new Cube(i, 743, Cube.type.LAND));
-                cubes.add(new Cube(i, 713, Cube.type.LAND));
-                cubes.add(new Cube(i, 683, Cube.type.LAND));
-                cubes.add(new Cube(i, 653, Cube.type.LAND));
-                cubes.add(new Cube(i, 623, Cube.type.LAND));
-                cubes.add(new Cube(i, 593, Cube.type.LAND));
-                cubes.add(new Cube(i, 563, Cube.type.LAND));
-                cubes.add(new Cube(i, 533, Cube.type.LAND));
-                cubes.add(new Cube(i, 503, Cube.type.LAND));
-                cubes.add(new Cube(i, 473, Cube.type.GRASS));
-            }else {
-                cubes.add(new Cube(i, 941, Cube.type.LAND));
-                cubes.add(new Cube(i, 920, Cube.type.LAND));
-                cubes.add(new Cube(i, 893, Cube.type.LAND));
-                cubes.add(new Cube(i, 863, Cube.type.LAND));
-                cubes.add(new Cube(i, 833, Cube.type.LAND));
-                cubes.add(new Cube(i, 803, Cube.type.LAND));
-                cubes.add(new Cube(i, 773, Cube.type.LAND));
-                cubes.add(new Cube(i, 743, Cube.type.GRASS));
-            }
+        for (int i = 0; i < 2830; i += 30) {
+            cubes.add(new Cube(i, 941, Cube.type.LAND));
+            cubes.add(new Cube(i, 920, Cube.type.LAND));
+            cubes.add(new Cube(i, 893, Cube.type.LAND));
+            cubes.add(new Cube(i, 863, Cube.type.LAND));
+            cubes.add(new Cube(i, 833, Cube.type.LAND));
+            cubes.add(new Cube(i, 803, Cube.type.LAND));
+            cubes.add(new Cube(i, 773, Cube.type.LAND));
+            cubes.add(new Cube(i, 743, Cube.type.GRASS));
         }
-        cubes.add(new Cube(280,560, Cube.type.WOOD));
-        cubes.add(new Cube(500,713, Cube.type.WOOD));
-        cubes.add(new Cube(530,713, Cube.type.WOOD));
-        cubes.add(new Cube(530,683, Cube.type.WOOD));
-        cubes.add(new Cube(560,713, Cube.type.WOOD));
-        cubes.add(new Cube(560,683, Cube.type.WOOD));
-        cubes.add(new Cube(560,653, Cube.type.WOOD));
+        cubes.add(new Cube(250,645, Cube.type.WOOD));
+        cubes.add(new Cube(280,615, Cube.type.WOOD));
+        cubes.add(new Cube(310,585, Cube.type.WOOD));
+        cubes.add(new Cube(340,555, Cube.type.WOOD));
+        cubes.add(new Cube(370,525, Cube.type.WOOD));
+        cubes.add(new Cube(400,495, Cube.type.WOOD));
+        cubes.add(new Cube(430,495, Cube.type.WOOD));
+        cubes.add(new Cube(460,495, Cube.type.WOOD));
+        cubes.add(new Cube(460,465, Cube.type.WOOD));
 
-        cubes.add(new Cube(910,520, Cube.type.WOOD));
-        cubes.add(new Cube(1100,640, Cube.type.WOOD));
+        cubes.add(new Cube(355,410, Cube.type.WOOD));
+        cubes.add(new Cube(325,380, Cube.type.WOOD));
+        cubes.add(new Cube(295,350, Cube.type.WOOD));
+        cubes.add(new Cube(265,320, Cube.type.WOOD));
+        cubes.add(new Cube(235,290, Cube.type.WOOD));
+        cubes.add(new Cube(205,290, Cube.type.WOOD));
+        cubes.add(new Cube(175,290, Cube.type.WOOD));
+        cubes.add(new Cube(175,260, Cube.type.WOOD));
+        cubes.add(new Cube(175,230, Cube.type.WOOD));
+        cubes.add(new Cube(175,200, Cube.type.WOOD));
+        cubes.add(new Cube(265,200, Cube.type.WOOD));
+        cubes.add(new Cube(295,200, Cube.type.WOOD));
+        cubes.add(new Cube(325,200, Cube.type.WOOD));
+        cubes.add(new Cube(355,200, Cube.type.WOOD));
+        cubes.add(new Cube(385,200, Cube.type.WOOD));
+        cubes.add(new Cube(415,200, Cube.type.WOOD));
+        cubes.add(new Cube(445,200, Cube.type.WOOD));
+        cubes.add(new Cube(445,170, Cube.type.WOOD));
+        cubes.add(new Cube(445,140, Cube.type.WOOD));
+        cubes.add(new Cube(445,110, Cube.type.WOOD));
+        cubes.add(new Cube(445,80, Cube.type.WOOD));
 
-        cubes.add(new Cube(1470,713, Cube.type.WOOD));
-        cubes.add(new Cube(1500,713, Cube.type.WOOD));
-        cubes.add(new Cube(1530,713, Cube.type.WOOD));
-        cubes.add(new Cube(1500,683, Cube.type.WOOD));
-        cubes.add(new Cube(1530,683, Cube.type.WOOD));
-        cubes.add(new Cube(1530,653, Cube.type.WOOD));
+        cubes.add(new Cube(550,713, Cube.type.WOOD));
+        cubes.add(new Cube(550,683, Cube.type.WOOD));
 
-        cubes.add(new Cube(1650,713, Cube.type.WOOD));
-        cubes.add(new Cube(1680,713, Cube.type.WOOD));
-        cubes.add(new Cube(1710,713, Cube.type.WOOD));
-        cubes.add(new Cube(1650,683, Cube.type.WOOD));
-        cubes.add(new Cube(1680,683, Cube.type.WOOD));
-        cubes.add(new Cube(1650,653, Cube.type.WOOD));
+        cubes.add(new Cube(915,713, Cube.type.WOOD));
+        cubes.add(new Cube(945,713, Cube.type.WOOD));
+        cubes.add(new Cube(945,683, Cube.type.WOOD));
 
-        cubes.add(new Cube(2010,713, Cube.type.WOOD));
-        cubes.add(new Cube(2040,713, Cube.type.WOOD));
-        cubes.add(new Cube(2070,713, Cube.type.WOOD));
-        cubes.add(new Cube(2040,683, Cube.type.WOOD));
-        cubes.add(new Cube(2070,683, Cube.type.WOOD));
-        cubes.add(new Cube(2070,653, Cube.type.WOOD));
+        cubes.add(new Cube(1570,713, Cube.type.WOOD));
+        cubes.add(new Cube(1600,713, Cube.type.WOOD));
+        cubes.add(new Cube(1630,713, Cube.type.WOOD));
+        cubes.add(new Cube(1660,713, Cube.type.WOOD));
+        cubes.add(new Cube(1690,713, Cube.type.WOOD));
+        cubes.add(new Cube(1720,713, Cube.type.WOOD));
+        cubes.add(new Cube(1600,683, Cube.type.WOOD));
+        cubes.add(new Cube(1630,683, Cube.type.WOOD));
+        cubes.add(new Cube(1630,653, Cube.type.WOOD));
+        cubes.add(new Cube(1660,683, Cube.type.WOOD));
+        cubes.add(new Cube(1660,653, Cube.type.WOOD));
+        cubes.add(new Cube(1660,623, Cube.type.WOOD));
+        cubes.add(new Cube(1690,683, Cube.type.WOOD));
+        cubes.add(new Cube(1690,653, Cube.type.WOOD));
+        cubes.add(new Cube(1690,623, Cube.type.WOOD));
+        cubes.add(new Cube(1690,593, Cube.type.WOOD));
+        cubes.add(new Cube(1720,683, Cube.type.WOOD));
+        cubes.add(new Cube(1720,653, Cube.type.WOOD));
+        cubes.add(new Cube(1720,623, Cube.type.WOOD));
+        cubes.add(new Cube(1720,593, Cube.type.WOOD));
+        cubes.add(new Cube(1720,563, Cube.type.WOOD));
 
-        cubes.add(new Cube(1870,505, Cube.type.WOOD));
-        cubes.add(new Cube(1980,475, Cube.type.WOOD));
-
-
-
+        cubes.add(new Cube(1270,660, Cube.type.WOOD));
+        cubes.add(new Cube(1330,660, Cube.type.WOOD));
     }
     public void addDefaultBillBlasters(){
-        billBlasters.add(new BillBlaster(1090,590, BillBlaster.directionBill.left));
-        billBlasters.add(new BillBlaster(2060,603, BillBlaster.directionBill.left));
+        billBlasters.add(new BillBlaster(1590,633, BillBlaster.directionBill.left));
     }
     public void addDefaultCoins() {
-        coins.add(new Coin(280, 528));
+        coins.add(new Coin(249, 614));
+        coins.add(new Coin(279, 584));
+        coins.add(new Coin(309, 554));
+        coins.add(new Coin(339, 524));
+        coins.add(new Coin(369, 494));
 
-        coins.add(new Coin(848, 713));
-        coins.add(new Coin(880, 713));
-        coins.add(new Coin(912, 713));
+        coins.add(new Coin(356, 379));
+        coins.add(new Coin(326, 349));
+        coins.add(new Coin(296, 319));
+        coins.add(new Coin(266, 289));
 
-        coins.add(new Coin(910, 487));
-        coins.add(new Coin(1020, 447));
-        coins.add(new Coin(1080, 517));
+        coins.add(new Coin(730, 712));
+        coins.add(new Coin(761, 712));
 
-        coins.add(new Coin(1469, 681));
-        coins.add(new Coin(1499, 651));
+        coins.add(new Coin(265, 168));
+        coins.add(new Coin(265, 137));
+        coins.add(new Coin(295, 168));
+        coins.add(new Coin(295, 137));
+        coins.add(new Coin(325, 168));
+        coins.add(new Coin(325, 137));
+        coins.add(new Coin(355, 168));
+        coins.add(new Coin(355, 137));
+        coins.add(new Coin(385, 168));
+        coins.add(new Coin(385, 137));
+        coins.add(new Coin(415, 168));
+        coins.add(new Coin(415, 137));
 
-        coins.add(new Coin(1840, 711));
-        coins.add(new Coin(1900, 711));
+
+
+
+
+
+
 
     }
     public void addDefaultBigTubes() {
-        bigTubes.add(new bigTube(590, 618, 80, 215, bigTube.type.ground));
-        bigTubes.add(new bigTube(1150, 618, 80, 215, bigTube.type.enemy));
-
+        bigTubes.add(new bigTube(970, 663, 80, 80, bigTube.type.enemy));
     }
 
     public void setStartPointX(int newStartPointX) {
