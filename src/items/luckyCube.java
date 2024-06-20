@@ -7,8 +7,8 @@ import java.awt.*;
 
 public class luckyCube extends Cube{
     public enum type{coin,redMushroom}
-   // public static final BufferedImage imageNotT = new ImageIcon("src/gameResources/luckyCube.gif");
-    //public static final BufferedImage imageT = new ImageIcon("src/gameResources/luckyCubeT.png");
+   public static final ImageIcon imageNotTake = ImageManager.getImageIcon(ImageManager.ImageName.LUCKY_CUBE);
+    public static final ImageIcon imageTake = ImageManager.getImageIcon(ImageManager.ImageName.LUCKY_CUBE_BEEN_TAKEN);
     private boolean taken = false;
     private type throwing;
     private int up = 0;
@@ -16,7 +16,7 @@ public class luckyCube extends Cube{
     public luckyCube(int x, int y, type type) {
         super(x, y, Cube.type.OTHER);
         active = true;
-        setImage(ImageManager.getImageIcon(ImageManager.ImageName.LUCKY_CUBE));
+        setImage(imageNotTake);
         throwing = type;
     }
     public void paint(Graphics graphics){
@@ -37,7 +37,7 @@ public class luckyCube extends Cube{
         }
 
         taken = true;
-        setImage(ImageManager.getImageIcon(ImageManager.ImageName.LUCKY_CUBE_BEEN_TAKEN));
+        setImage(imageTake);
         new Thread(()->{
             int sum = 0;
             while (sum < 40){
@@ -62,9 +62,6 @@ public class luckyCube extends Cube{
     }
     public Rectangle floorSpace(){
         return new Rectangle(getX()+width/15,getY()+height ,width-width/15,height/15);
-    }
-    public luckyCube clone() throws CloneNotSupportedException{
-        return (luckyCube) super.clone();
     }
     public void setActive(boolean newActive){
         active = newActive;

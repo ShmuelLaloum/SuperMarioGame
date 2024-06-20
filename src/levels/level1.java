@@ -51,7 +51,7 @@ public class level1 extends level{
         luckyCubes.add(new luckyCube(1300,660, luckyCube.type.redMushroom));
     }
     public void addDefaultGoombas(){
-        goombas.add( new goomba(425, 444));
+        goombas.add( new goomba(427, 444));
         goombas.add( new goomba(245, 238));
         goombas.add( new goomba(630, 670));
         goombas.add( new goomba(900, 670));

@@ -11,23 +11,32 @@ public class endLevelScreen extends JPanel {
     public enum Status {PASS,FAIL}
     private window window;
     private ImageIcon imageBackground;
-    public endLevelScreen(Status status, level level, window window){
+    public static final ImageIcon imageBackgroundPass = ImageManager.getImageIcon(ImageManager.ImageName.LEVEL_COMPLETE_BACKGROUND);
+    public static final ImageIcon imageBackgroundFail = ImageManager.getImageIcon(ImageManager.ImageName.GAME_OVER_BACKGROUND);
+    public static final ImageIcon levelsButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.LEVELS_BUTTON);
+    public static final ImageIcon nextLevelsButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.NEXT_LEVEL_BUTTON);
+    public static final ImageIcon retryLevelsButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.RETRY_LEVEL_BUTTON);
+    private static GameFrame gaFrame;
+    private static level level;
+    private static levelsMenu leMenu;
+    public endLevelScreen(Status status,levelsMenu levelsMenu, level levelCurrent, GameFrame gameFrame,window window){
+        gaFrame = gameFrame;
+        level = levelCurrent;
+        leMenu = levelsMenu;
+        this.setLayout(null);
         SoundManager.loopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC);
         this.window = window;
-        imageBackground = status == Status.PASS ? ImageManager.getImageIcon(ImageManager.ImageName.LEVEL_COMPLETE_BACKGROUND) : ImageManager.getImageIcon(ImageManager.ImageName.GAME_OVER_BACKGROUND);
-        Image resizedLevelsImage = ImageManager.getImageIcon(ImageManager.ImageName.LEVELS_BUTTON).getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
-        Image resizedNextLeveImage = ImageManager.getImageIcon(ImageManager.ImageName.NEXT_LEVEL_BUTTON).getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
-        Image resizedRetryLevelButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.RETRY_LEVEL_BUTTON).getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
-        this.setLayout(null);
+        imageBackground = status == Status.PASS ? imageBackgroundPass : imageBackgroundFail;
+        Image resizedLevelsImage = levelsButtonImage.getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
+        Image resizedNextLeveImage = nextLevelsButtonImage.getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
+        Image resizedRetryLevelButtonImage = retryLevelsButtonImage.getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
 
-        if (!levelsMenu.isLevelIsComplete(level)) {
-            levelsMenu.setLevelIsComplete(level,status == Status.PASS);
+        if (!gameScreens.levelsMenu.isLevelIsComplete(levelCurrent)) {
+            gameScreens.levelsMenu.setLevelIsComplete(levelCurrent,status == Status.PASS);
         }
         JButton levelsButton = new JButton();
         JButton retryLevelButton = new JButton();
         JButton nextLevelButton = new JButton();
-
-
 
         levelsButton.setBounds(600,800,180,65);
         levelsButton.setOpaque(false);
@@ -36,7 +45,9 @@ public class endLevelScreen extends JPanel {
         levelsButton.setFocusPainted(false);
         levelsButton.setIcon(new ImageIcon(resizedLevelsImage));
         levelsButton.addActionListener(event -> {
-            window.switchPanel(new levelsMenu(window));
+            gaFrame = null;
+            leMenu.removePanelMakeSureToStart();
+            window.switchPanel(leMenu);
         });
 
         retryLevelButton.setBounds(600,levelsButton.getY()-70,180,65);
@@ -47,10 +58,12 @@ public class endLevelScreen extends JPanel {
         retryLevelButton.setIcon(new ImageIcon(resizedRetryLevelButtonImage));
         retryLevelButton.addActionListener(event -> {
             SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC);
-            window.switchPanel(new GameFrame(levelsMenu.resetLevel(level),window));
+            level = gameScreens.levelsMenu.resetLevel(level);
+            gaFrame = new GameFrame(level,leMenu,window);
+            window.switchPanel(gaFrame);
         });
 
-        if (levelsMenu.getNextLevel(level) != null && levelsMenu.isLevelIsComplete(level)) {
+        if (gameScreens.levelsMenu.getNextLevel(levelCurrent) != null && gameScreens.levelsMenu.isLevelIsComplete(levelCurrent)) {
             nextLevelButton.setBounds(600, retryLevelButton.getY() - 70, 180, 65);
             nextLevelButton.setOpaque(false);
             nextLevelButton.setContentAreaFilled(false);
@@ -59,7 +72,9 @@ public class endLevelScreen extends JPanel {
             nextLevelButton.setIcon(new ImageIcon(resizedNextLeveImage));
             nextLevelButton.addActionListener(event -> {
                 SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC);
-                window.switchPanel(new GameFrame(levelsMenu.getNextLevel(level),window));
+                level = gameScreens.levelsMenu.getNextLevel(level);
+                gaFrame = new GameFrame(level,leMenu,window);
+                window.switchPanel(gaFrame);
             });
             this.add(nextLevelButton);
         }

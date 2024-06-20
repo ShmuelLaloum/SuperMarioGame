@@ -5,8 +5,8 @@ import resourcesManager.ImageManager;
 import javax.swing.*;
 import java.awt.*;
 
-public class BillBlaster implements groundAble,needLandAble, Cloneable{
-    public static final ImageIcon imageIconBody = new ImageIcon("src/gameResources/BombshellBillBlasterBody.png");
+public class BillBlaster implements groundAble,needLandAble{
+    public static final ImageIcon image = ImageManager.getImageIcon(ImageManager.ImageName.BILL_BLASTER);
     public enum directionBill{right,left}
     private int x;
     private int y;
@@ -14,7 +14,6 @@ public class BillBlaster implements groundAble,needLandAble, Cloneable{
     public static final int height = 50;
     private int distance = 1;
     private int direction;
-    private boolean Finsh = false;
     private int ground;
     private BulletBill bullet;
     private boolean active;
@@ -30,7 +29,7 @@ public class BillBlaster implements groundAble,needLandAble, Cloneable{
     public void paint(Graphics graphics){
         Graphics2D g2d = (Graphics2D) graphics.create();
         bullet.paint(graphics);
-        g2d.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.BILL_BLASTER).getImage(),x,y, width, height, null);
+        g2d.drawImage(image.getImage(),x,y, width, height, null);
         g2d.dispose();
     }
     public void moveBall(){
@@ -104,14 +103,6 @@ public class BillBlaster implements groundAble,needLandAble, Cloneable{
     public void StopsBullet(){
         distance = direction == -1 ? -6 : 6;
         bullet.setX((direction == -1 ? x+30 : x)-distance);
-    }
-    public boolean isFinsh(){
-        return isFinsh();
-    }
-    public BillBlaster clone() throws CloneNotSupportedException{
-        BillBlaster temp = (BillBlaster) super.clone();
-        temp.bullet = bullet.clone();
-        return temp;
     }
     public void setActive(boolean newActive){
         active = newActive;

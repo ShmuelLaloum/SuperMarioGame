@@ -5,13 +5,13 @@ import resourcesManager.ImageManager;
 import javax.swing.*;
 import java.awt.*;
 
-public class bigTube implements groundAble, Cloneable{
+public class bigTube implements groundAble{
     public enum type{enemy,ground}
     private int x;
     private int y;
     private int width;
     private int height;
-    public static final ImageIcon imageIcon = new ImageIcon("src/gameResources/kube.png");
+    public static final ImageIcon image = ImageManager.getImageIcon(ImageManager.ImageName.TUBE);
     private type status;
     private CarnivorousPlant carnivorousPlant = null;
     private int d;
@@ -51,7 +51,7 @@ public class bigTube implements groundAble, Cloneable{
             carnivorousPlant.paint(graphics);
         }
         Graphics2D g2d = (Graphics2D) graphics.create();
-        g2d.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.KUBE).getImage(),x,y, width, height, null);
+        g2d.drawImage(image.getImage(),x,y, width, height, null);
         g2d.dispose();
     }
     public int getWidth(){
@@ -75,15 +75,6 @@ public class bigTube implements groundAble, Cloneable{
     }
     public String toString(){
         return carnivorousPlant+"";
-    }
-    public void setCarnivorousPlant(){
-        carnivorousPlant = new CarnivorousPlant(10,05,5,55);
-    }
-    public bigTube clone() throws CloneNotSupportedException{
-        bigTube temp = (bigTube)super.clone();
-        if (carnivorousPlant != null)
-            temp.carnivorousPlant = carnivorousPlant.clone();
-        return temp;
     }
     public void setActive(boolean newActive){
         if (carnivorousPlant != null) {

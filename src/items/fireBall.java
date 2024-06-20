@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class fireBall {
-    public static final ImageIcon imageIcon = new ImageIcon("src/gameResources/FireBall.png");
+    public static final ImageIcon imageIcon = ImageManager.getImageIcon(ImageManager.ImageName.FIRE_BALL);
     private int x;
     private int y;
     public static final int width = 10;
@@ -19,7 +19,7 @@ public class fireBall {
     }
     public void paint(Graphics graphics){
         Graphics2D g2d = (Graphics2D) graphics.create();
-        g2d.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.FIRE_BALL).getImage(), x, y, width, height, null);
+        g2d.drawImage(imageIcon.getImage(), x, y, width, height, null);
         g2d.dispose();
     }
     public void shoot(){

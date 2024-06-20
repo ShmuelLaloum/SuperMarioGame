@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class castle implements needLandAble {
-    public static final ImageIcon imageIcon = new ImageIcon("src/gameResources/castle.png");
+    public static final ImageIcon imageIcon = ImageManager.getImageIcon(ImageManager.ImageName.CASTLE);
     private int x;
     private int y;
     private int ground;
@@ -20,7 +20,7 @@ public class castle implements needLandAble {
     }
     public void paint(Graphics graphics) {
         Graphics2D g2d = (Graphics2D) graphics.create();
-        g2d.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.CASTLE).getImage(),x, y, width, height, null);
+        g2d.drawImage(imageIcon.getImage(),x, y, width, height, null);
         g2d.dispose();
     }
     public void setX(int newX){

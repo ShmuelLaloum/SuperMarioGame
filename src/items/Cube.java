@@ -5,12 +5,12 @@ import resourcesManager.ImageManager;
 import javax.swing.*;
 import java.awt.*;
 
-public class Cube implements groundAble,Cloneable {
+public class Cube implements groundAble {
     public enum type{LAND,GRASS,WOOD,OTHER}
     private ImageIcon image;
-    public static final ImageIcon imageGrassCube = new ImageIcon("src/gameResources/grassCube.jpg");
-    public static final ImageIcon imageWoodCube = new ImageIcon("src/gameResources/woodCube.jpg");
-    public static final ImageIcon imageLandCube = new ImageIcon("src/gameResources/landCube.jpg");
+    public static final ImageIcon imageGrassCube = ImageManager.getImageIcon(ImageManager.ImageName.GRASS_CUBE);
+    public static final ImageIcon imageWoodCube = ImageManager.getImageIcon(ImageManager.ImageName.WOOD_CUBE);
+    public static final ImageIcon imageLandCube = ImageManager.getImageIcon(ImageManager.ImageName.LAND_CUBE);
     private int x;
     private int y;
     public static final int width = 30;
@@ -20,11 +20,11 @@ public class Cube implements groundAble,Cloneable {
         this.x = x;
         this.y = y;
         if (type == Cube.type.GRASS){
-            image = ImageManager.getImageIcon(ImageManager.ImageName.GRASS_CUBE);
+            image = imageGrassCube;
         }else if (type == Cube.type.WOOD){
-            image = ImageManager.getImageIcon(ImageManager.ImageName.WOOD_CUBE);
+            image = imageWoodCube;
         }else if (type == Cube.type.LAND){
-            image = ImageManager.getImageIcon(ImageManager.ImageName.LAND_CUBE);
+            image = imageLandCube;
         }
     }
     public void setImage(ImageIcon newImage){
@@ -62,9 +62,6 @@ public class Cube implements groundAble,Cloneable {
     }
     public int getWidth(){
         return width;
-    }
-    public Cube clone() throws CloneNotSupportedException{
-        return (Cube)super.clone();
     }
     public ImageIcon getImage(){
         return image;

@@ -7,14 +7,14 @@ import javax.swing.*;
 import java.awt.*;
 
 
-public class Coin implements Cloneable{
+public class Coin{
     private int x;
     private int y;
     public static final int width = 30;
     public static final int height = 30;
     private boolean startCollected = false;
     private boolean finishedCollected = false;
-    public static final ImageIcon imageIcon = new ImageIcon("src/gameResources/coin.png");
+    public static final ImageIcon imageIcon = ImageManager.getImageIcon(ImageManager.ImageName.COIN);
     private boolean active;
 
     public Coin(int x, int y){
@@ -24,7 +24,7 @@ public class Coin implements Cloneable{
     }
     public void paint(Graphics graphics) {
         Graphics2D g2d = (Graphics2D) graphics.create();
-        g2d.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.COIN).getImage(),x, y, width, height, null);
+        g2d.drawImage(imageIcon.getImage(),x, y, width, height, null);
         g2d.dispose();
     }
     public void setX(int newX){
@@ -88,9 +88,6 @@ public class Coin implements Cloneable{
 
             }
         }).start();
-    }
-    public Coin clone() throws CloneNotSupportedException{
-        return (Coin)super.clone();
     }
     public void setActive(boolean newActive){
         active = newActive;

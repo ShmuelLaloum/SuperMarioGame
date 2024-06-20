@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Person implements needLandAble,Cloneable{
+public class Person implements needLandAble{
     private int x;
     private int y;
     private int ground;
@@ -16,10 +16,10 @@ public class Person implements needLandAble,Cloneable{
     private boolean outOfFrame = false;
     private float clarity = 1f;
     private ImageIcon image;
-    public static final ImageIcon imageMarioGoesRight = new ImageIcon("src/gameResources/MarioGoesRight.png");
-    public static final ImageIcon imageMarioGoesLeft = new ImageIcon("src/gameResources/MarioGoesLeft.png");
-    public static final ImageIcon imageMarioJumpsRight = new ImageIcon("src/gameResources/MarioJumpsRight.png");
-    public static final ImageIcon imageMarioJumpsLeft = new ImageIcon("src/gameResources/MarioJumpsLeft.png");
+    public static final ImageIcon imageMarioGoesRight = ImageManager.getImageIcon(ImageManager.ImageName.MARIO_GOES_RIGHT);
+    public static final ImageIcon imageMarioGoesLeft = ImageManager.getImageIcon(ImageManager.ImageName.MARIO_GOES_LEFT);
+    public static final ImageIcon imageMarioJumpsRight = ImageManager.getImageIcon(ImageManager.ImageName.MARIO_JUMPS_RIGHT);
+    public static final ImageIcon imageMarioJumpsLeft = ImageManager.getImageIcon(ImageManager.ImageName.MARIO_JUMPS_LEFT);
     public static final int jumpHeight = 200;
     public static final int walkingDistance = 5;
     private int width = 30;
@@ -75,7 +75,7 @@ public class Person implements needLandAble,Cloneable{
         if (!heJumps && touchGround) {
             if (CanJump) {
                 heJumps = true;
-                image = image == ImageManager.getImageIcon(ImageManager.ImageName.MARIO_GOES_LEFT) ? ImageManager.getImageIcon(ImageManager.ImageName.MARIO_JUMPS_LEFT) : ImageManager.getImageIcon(ImageManager.ImageName.MARIO_JUMPS_RIGHT);
+                image = image == imageMarioGoesLeft ? imageMarioJumpsLeft : imageMarioJumpsRight;
             }
             SoundManager.stopSound(SoundManager.SoundName.MARIO_JUMP);
             Thread n = new Thread(() -> {
@@ -95,7 +95,7 @@ public class Person implements needLandAble,Cloneable{
                         }
                     }
                 }
-                image = image == ImageManager.getImageIcon(ImageManager.ImageName.MARIO_JUMPS_LEFT) ? ImageManager.getImageIcon(ImageManager.ImageName.MARIO_GOES_LEFT) : ImageManager.getImageIcon(ImageManager.ImageName.MARIO_GOES_RIGHT);;
+                image = image == imageMarioJumpsLeft ? imageMarioGoesLeft : imageMarioGoesRight;
                 heJumps = false;
                 touchGround = false;
 
@@ -107,8 +107,8 @@ public class Person implements needLandAble,Cloneable{
     }
     public void moveLeft(){
         if (CanGoLeft /*&& x-walkingDistance > walkingDistance*2*/) {
-            if (image != ImageManager.getImageIcon(ImageManager.ImageName.MARIO_GOES_LEFT)){
-                image = heJumps ? ImageManager.getImageIcon(ImageManager.ImageName.MARIO_JUMPS_LEFT) : ImageManager.getImageIcon(ImageManager.ImageName.MARIO_GOES_LEFT);
+            if (image != imageMarioGoesLeft){
+                image = heJumps ? imageMarioJumpsLeft : imageMarioGoesLeft;
             }
             //this.x -= walkingDistance;
             //s1.moveScreen(walkingDistance);
@@ -116,8 +116,8 @@ public class Person implements needLandAble,Cloneable{
     }
     public void moveRight(){
         if (CanGoRight){
-            if (image != ImageManager.getImageIcon(ImageManager.ImageName.MARIO_GOES_RIGHT)){
-                image = heJumps ? ImageManager.getImageIcon(ImageManager.ImageName.MARIO_JUMPS_RIGHT) : ImageManager.getImageIcon(ImageManager.ImageName.MARIO_GOES_RIGHT);
+            if (image != imageMarioGoesRight){
+                image = heJumps ? imageMarioJumpsRight : imageMarioGoesRight;
             }
             //this.x+=walkingDistance;
             //s1.moveScreen(-walkingDistance);
@@ -170,76 +170,18 @@ public class Person implements needLandAble,Cloneable{
     }
     public void setCanJump(boolean newCanJump) {
         this.CanJump = newCanJump;
-        /*for (items.groundAble c : allCubes) {
-            if (ceilingArea().intersects(c.body()))
-                return true;
-        }
-        return false;
-
-         */
-    }
-    public boolean isCanJump(){
-        return CanJump;
     }
     public void setCanGoRight(boolean newCanGoRight) {
         this.CanGoRight = newCanGoRight;
-        /*for (items.groundAble c : allCubes) {
-            if (rightField().intersects(c.body()))
-                return true;
-        }
-        return false;
-
-         */
     }
     public boolean isCanGoRight(){
         return CanGoRight;
     }
     public void setCanGoLeft(boolean newCanGoLeft) {
         this.CanGoLeft = newCanGoLeft;
-        /*for (items.groundAble c : allCubes) {
-            if (leftField().intersects(c.body()))
-                return true;
-        }
-        return false;
-
-         */
     }
     public boolean isCanGoLeft(){
         return CanGoLeft;
-    }
-    public int getGround(){
-        return ground;
-    }
-    private void updateGroundBasedOnClosestCube() {
-        /*new Thread(()->{
-            while (true){
-        items.Cube closestCube = null;
-        int closestDistance = Integer.MAX_VALUE;
-
-        for (items.Cube c : allCubes) {
-            Rectangle upperArea = c.upperArea();
-            Rectangle floorSpace = this.floorSpace();
-
-            int distanceX = Math.abs(upperArea.x - floorSpace.x);
-            int distanceY = upperArea.y - floorSpace.y >= 0 ? upperArea.y - floorSpace.y : Integer.MAX_VALUE;
-
-            if (distanceX < 25 && distanceY < closestDistance) {
-                closestCube = c;
-                closestDistance = distanceY;
-            }
-        }
-
-        if (closestCube != null) {
-            this.setGround(closestCube.getY() - this.getHeight());
-        }
-        try {
-            Thread.sleep(10);
-        } catch (Exception ignored) {
-        }
-    }
-}).start();
-
-         */
     }
     public void LandUpdate(){
         new Thread(()->{
@@ -306,9 +248,6 @@ public class Person implements needLandAble,Cloneable{
     }
     public options getStatus(){
         return status;
-    }
-    public Person clone() throws CloneNotSupportedException{
-        return (Person)super.clone();
     }
     public void setActive(boolean newActive){
         active = newActive;

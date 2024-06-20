@@ -6,9 +6,9 @@ import resourcesManager.SoundManager;
 import javax.swing.*;
 import java.awt.*;
 
-public class goomba implements enemyAble,needLandAble, Cloneable {
-    public static final ImageIcon imageMarioGoesLeft = new ImageIcon("src/gameResources/goombaLeft.gif");
-    public static final ImageIcon imageMarioGoesRight = new ImageIcon("src/gameResources/goombaRight.gif");
+public class goomba implements enemyAble,needLandAble {
+    public static final ImageIcon imageMarioGoesLeft = ImageManager.getImageIcon(ImageManager.ImageName.GOOMBA_GO_LEFT);
+    public static final ImageIcon imageMarioGoesRight = ImageManager.getImageIcon(ImageManager.ImageName.GOOMBA_GO_RIGHT);
     private ImageIcon imageIcon;
     private int x;
     private int y;
@@ -24,7 +24,7 @@ public class goomba implements enemyAble,needLandAble, Cloneable {
         this.y = y;
         alive = true;
         active = true;
-        imageIcon = ImageManager.getImageIcon(ImageManager.ImageName.GOOMBA_GO_LEFT);
+        imageIcon = imageMarioGoesLeft;
         move();
         LandUpdate();
     }
@@ -48,8 +48,8 @@ public class goomba implements enemyAble,needLandAble, Cloneable {
         }).start();
     }
     public void ChangeDirection(){
-        imageIcon = imageIcon == ImageManager.getImageIcon(ImageManager.ImageName.GOOMBA_GO_LEFT) ? ImageManager.getImageIcon(ImageManager.ImageName.GOOMBA_GO_RIGHT) : ImageManager.getImageIcon(ImageManager.ImageName.GOOMBA_GO_LEFT);
-        x += direction < 0 ? 4 : -4;
+        imageIcon = imageIcon == imageMarioGoesLeft ? imageMarioGoesRight : imageMarioGoesLeft;
+        x += direction < 0 ? 5 : -5;
         direction *=-1;
     }
     public Rectangle body(){
@@ -63,12 +63,6 @@ public class goomba implements enemyAble,needLandAble, Cloneable {
     }
     public int getX(){
         return x;
-    }
-    public Rectangle rightField(){
-        return new Rectangle(x+width,y ,width/15,height);
-    }
-    public Rectangle leftField(){
-        return new Rectangle(x,y ,width/15,height);
     }
     public Rectangle floorSpace(){
         return new Rectangle(x+width/15,y+height ,width-width/15,height/15);
@@ -113,9 +107,6 @@ public class goomba implements enemyAble,needLandAble, Cloneable {
     }
     public int getWidth(){
         return width;
-    }
-    public goomba clone() throws CloneNotSupportedException{
-        return (goomba)super.clone();
     }
     public void setActive(boolean newActive){
         active = newActive;

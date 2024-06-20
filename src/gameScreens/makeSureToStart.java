@@ -8,17 +8,17 @@ import javax.swing.*;
 import java.awt.*;
 
 public class makeSureToStart extends JPanel {
-    private static final ImageIcon playButton = new ImageIcon("src/gameResources/playButton.png");
-    private static final ImageIcon threeGoldStars = new ImageIcon("src/gameResources/threeGoldStars.png");
-    private static final ImageIcon threeGreyStars = new ImageIcon("src/gameResources/threeGreyStars.png");
-    private static final ImageIcon backButton = new ImageIcon("src/gameResources/backButton.png");
-    private static final ImageIcon background = new ImageIcon("src/gameResources/backgroundWaiting.png");
-    public makeSureToStart(window window, level level){
+    private static final ImageIcon playButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.PLAY_BUTTON_BACKGROUND);
+    private static final ImageIcon backButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.BACK_BUTTON_BACKGROUND);
+    public static final ImageIcon backgroundImage = ImageManager.getImageIcon(ImageManager.ImageName.MAKE_SURE_TO_START_SCREEN_BACKGROUND);
+    private static GameFrame gameFrame;
+    public makeSureToStart(window window,levelsMenu levelsMenu, level level){
+        this.setOpaque(false);
         this.setLayout(null);
         this.setBounds(150,50,1250,750);
         this.setOpaque(false);
-        Image resizedPlayImage = ImageManager.getImageIcon(ImageManager.ImageName.PLAY_BUTTON_BACKGROUND).getImage().getScaledInstance(100, 40, Image.SCALE_SMOOTH);
-        Image resizedBackImage = ImageManager.getImageIcon(ImageManager.ImageName.BACK_BUTTON_BACKGROUND).getImage().getScaledInstance(100, 40, Image.SCALE_SMOOTH);
+        Image resizedPlayImage = playButtonImage.getImage().getScaledInstance(100, 40, Image.SCALE_SMOOTH);
+        Image resizedBackImage = backButtonImage.getImage().getScaledInstance(100, 40, Image.SCALE_SMOOTH);
 
        /* JLabel requirements = new JLabel("level requirements :" + levelRequirements + " coins");
         requirements.setBounds(335,360,600,100);
@@ -38,7 +38,8 @@ public class makeSureToStart extends JPanel {
         this.add(startGame);
         startGame.addActionListener(event -> {
             SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_LOBBY_MUSIC);
-            window.switchPanel(new GameFrame(level, window));
+            gameFrame = new GameFrame(level,levelsMenu, window);
+            window.switchPanel(gameFrame);
         });
 
         JButton back = new JButton();
@@ -50,12 +51,12 @@ public class makeSureToStart extends JPanel {
         back.setIcon(new ImageIcon(resizedBackImage));
         this.add(back);
         back.addActionListener(event -> {
-            window.switchPanel(new levelsMenu(window));
+            levelsMenu.removePanelMakeSureToStart();
         });
     }
 
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        graphics.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.MAKE_SURE_TO_START_SCREEN_BACKGROUND).getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
+        graphics.drawImage(backgroundImage.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
     }
 }

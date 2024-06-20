@@ -12,7 +12,7 @@ import java.util.List;
 
 public class GameFrame extends JPanel {
     private int collectedCoins = 0;
-    public static final ImageIcon backgroundImage = new ImageIcon("src/gameResources/sky2.jpg");
+    public static final ImageIcon backgroundImage = ImageManager.getImageIcon(ImageManager.ImageName.LEVEL1_BACKGROUND);
     private int imageX = 0;
     private int startPoint;
     private int endPoint;
@@ -33,8 +33,12 @@ public class GameFrame extends JPanel {
     private final level levelX;
     private final window window;
     private boolean stop = false;
+    private static levelsMenu leMenu;
     private Controller controller;
-    public GameFrame(level level, window window) {
+    private static PauseMenuScreen pauseMenuScreen;
+    private static endLevelScreen endLevelScreen;
+    public GameFrame(level level,levelsMenu levelsMenu, window window) {
+        leMenu = levelsMenu;
         this.setLayout(null);
         SoundManager.loopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC,-10.0f);
         this.setFocusable(true);
@@ -44,11 +48,12 @@ public class GameFrame extends JPanel {
         JButton pauseButton = new JButton();
         pauseButton.setBounds(500,90,90,90);
         pauseButton.addActionListener(e -> {
+            pauseMenuScreen = new PauseMenuScreen(levelX,leMenu,this,window);
             this.setLayout(new BorderLayout());
             setActive(false);
             levelX.setEndPointX(endPoint);
             levelX.setStartPointX(startPoint);
-            this.add(new PauseMenuScreen(levelX,window));
+            this.add(pauseMenuScreen);
             this.remove(pauseButton);
             this.revalidate();
             this.repaint();
@@ -121,7 +126,8 @@ public class GameFrame extends JPanel {
             }
             setActive(false);
             SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC);
-            window.switchPanel(new endLevelScreen((mario.isAlive() && collectedCoins >= levelX.getCoinsRequired() ? endLevelScreen.Status.PASS : endLevelScreen.Status.FAIL),levelX,window));
+            endLevelScreen = new endLevelScreen((mario.isAlive() && collectedCoins >= levelX.getCoinsRequired() ? gameScreens.endLevelScreen.Status.PASS : gameScreens.endLevelScreen.Status.FAIL),leMenu,levelX,this,window);
+            window.switchPanel(endLevelScreen);
         }).start();
     }
     public synchronized void updateGameObjects() {
@@ -264,7 +270,7 @@ public class GameFrame extends JPanel {
                 int distanceX = Math.abs(upperArea.x - floorSpace.x);
                 int distanceY = upperArea.y - floorSpace.y >= -1 ? upperArea.y - floorSpace.y : Integer.MAX_VALUE;
 
-                if (collision(needLandAble.floorSpace(), c.upperArea()) || distanceX < needLandAble.getWidth() && distanceY < closestDistance) {
+                if (collision(needLandAble.floorSpace(), c.upperArea()) || distanceX < (needLandAble.getWidth()/2) && distanceY < closestDistance) {
                     if (collision(needLandAble.floorSpace(), c.upperArea()) && needLandAble instanceof Person) {
                         mario.setTouchGround(true);
                     }
@@ -285,8 +291,8 @@ public class GameFrame extends JPanel {
     public synchronized void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         Graphics2D g2d = (Graphics2D) graphics.create();
-        g2d.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.LEVEL1_BACKGROUND).getImage(), -imageX, 0, 1540, 941, this);
-        g2d.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.LEVEL1_BACKGROUND).getImage(), getWidth() - imageX, 0, 1540, 941, this);
+        g2d.drawImage(backgroundImage.getImage(), -imageX, 0, 1540, 941, this);
+        g2d.drawImage(backgroundImage.getImage(), getWidth() - imageX, 0, 1540, 941, this);
         g2d.drawImage(Coin.imageIcon.getImage(), getWidth() - Coin.width * 2, Coin.height, Coin.width, Coin.height, this);
         g2d.setFont(new Font("Arial", Font.BOLD, 35));
         g2d.setColor(Color.yellow);

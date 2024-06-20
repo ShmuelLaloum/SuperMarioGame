@@ -5,8 +5,8 @@ import resourcesManager.ImageManager;
 import javax.swing.*;
 import java.awt.*;
 
-public class CarnivorousPlant implements enemyAble, Cloneable{
-    public static final ImageIcon imageIcon = new ImageIcon("src/gameResources/CarnivorousPlant.gif");
+public class CarnivorousPlant implements enemyAble{
+    public static final ImageIcon imageIcon = ImageManager.getImageIcon(ImageManager.ImageName.CARNIVOROUS_PLANT);
     private int up;
     private int x;
     private int y;
@@ -26,7 +26,7 @@ public class CarnivorousPlant implements enemyAble, Cloneable{
 
     public void paint(Graphics graphics) {
         Graphics2D g2d = (Graphics2D) graphics.create();
-        g2d.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.CARNIVOROUS_PLANT).getImage(),x, y, width, height, null);
+        g2d.drawImage(imageIcon.getImage(),x, y, width, height, null);
         g2d.dispose();
     }
     public void moveUpAndDown(){
@@ -61,9 +61,6 @@ public class CarnivorousPlant implements enemyAble, Cloneable{
     }
     public Rectangle body(){
         return new Rectangle(x,y,width,height);
-    }
-    public CarnivorousPlant clone() throws CloneNotSupportedException{
-        return (CarnivorousPlant)super.clone();
     }
     public void setActive(boolean newActive){
         active = newActive;

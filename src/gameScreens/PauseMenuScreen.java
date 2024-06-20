@@ -2,16 +2,28 @@ package gameScreens;
 
 import levels.level;
 import resourcesManager.ImageManager;
+import resourcesManager.SoundManager;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class PauseMenuScreen extends JPanel {
-    public PauseMenuScreen(level level, window window){
+    private window window;
+    private static level level;
+    private static GameFrame gaFrame;
+    private static levelsMenu leMenu;
+    public static final ImageIcon backgroundImage = ImageManager.getImageIcon(ImageManager.ImageName.OPTIONS_BACKGROUND);
+    public static final ImageIcon quitGameButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.QUIT_GAME_BUTTON);
+    private static final ImageIcon continueButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.CONTINUE_BUTTON);
+    public PauseMenuScreen(level levelCurrent,levelsMenu levelsMenu,GameFrame gameFrame, window window){
         this.setOpaque(false);
         this.setLayout(null);
-        Image resizedQuitGameImage = ImageManager.getImageIcon(ImageManager.ImageName.QUIT_GAME_BUTTON).getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
-        Image resizedContinueImage = ImageManager.getImageIcon(ImageManager.ImageName.CONTINUE_BUTTON).getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
+        this.window = window;
+        level = levelCurrent;
+        leMenu = levelsMenu;
+        gaFrame = gameFrame;
+        Image resizedQuitGameImage = quitGameButtonImage.getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
+        Image resizedContinueImage = continueButtonImage.getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
 
         JButton quitGameButton = new JButton();
         quitGameButton.setBounds(660,500,180,65);
@@ -22,7 +34,11 @@ public class PauseMenuScreen extends JPanel {
         quitGameButton.setIcon(new ImageIcon(resizedQuitGameImage));
 
         quitGameButton.addActionListener(event -> {
-            window.switchPanel(new levelsMenu(window));
+            SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC);
+            SoundManager.loopSound(SoundManager.SoundName.BACKGROUND_LOBBY_MUSIC);
+            gaFrame = null;
+            leMenu.removePanelMakeSureToStart();
+            window.switchPanel(leMenu);
         });
 
         JButton continueButton = new JButton();
@@ -34,7 +50,8 @@ public class PauseMenuScreen extends JPanel {
         continueButton.setIcon(new ImageIcon(resizedContinueImage));
 
         continueButton.addActionListener(event -> {
-            window.switchPanel(new GameFrame(level,window));
+            gaFrame = new GameFrame(level,levelsMenu,window);
+            window.switchPanel(gaFrame);
         });
         this.add(continueButton);
         this.add(quitGameButton);
@@ -46,7 +63,7 @@ public class PauseMenuScreen extends JPanel {
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(new Color(255, 255, 255, 128)); // לבן חצי-שקוף
         g2d.fillRect(0, 0, 1540, 941);
-        g2d.drawImage(ImageManager.getImageIcon(ImageManager.ImageName.OPTIONS_BACKGROUND).getImage(),500,200,500,550,this);
+        g2d.drawImage(backgroundImage.getImage(),500,200,500,550,this);
         g2d.dispose();
 
     }

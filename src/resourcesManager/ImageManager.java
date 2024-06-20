@@ -25,7 +25,7 @@ public class ImageManager {
         BROKEN_CUBE("brokenCube.png"),
         WOOD_CUBE("woodCube.jpg"),
         MUSHROOM_RED("mushroomRED.png"),
-        KUBE("kube.png"),
+        TUBE("tube.png"),
         CARNIVOROUS_PLANT("CarnivorousPlant.gif"),
         COIN("coin.png"),
         CASTLE("castle.png"),

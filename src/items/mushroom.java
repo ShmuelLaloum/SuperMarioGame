@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class mushroom implements needLandAble {
     public enum type{RED}
-    public static final ImageIcon imageRED = new ImageIcon("src/gameResources/mushroomRED.png");
+    public static final ImageIcon imageRED = ImageManager.getImageIcon(ImageManager.ImageName.MUSHROOM_RED);
     private ImageIcon imageIcon;
     private int x;
     private int y;
@@ -22,7 +22,7 @@ public class mushroom implements needLandAble {
         this.y = y;
         Ground = y;
         active = true;
-        imageIcon = ImageManager.getImageIcon(ImageManager.ImageName.MUSHROOM_RED);
+        imageIcon = imageRED;
         LandUpdate();
         move();
     }
@@ -83,12 +83,6 @@ public class mushroom implements needLandAble {
     public int getY(){
         return y;
     }
-    public int getGround(){
-        return  Ground;
-    }
-    public boolean collision (Rectangle rect1, Rectangle rect2) {
-        return rect1.intersects(rect2);
-    }
     public Rectangle body(){
         return new Rectangle(x,y,width,height);
     }
@@ -97,12 +91,6 @@ public class mushroom implements needLandAble {
     }
     public int getX(){
         return x;
-    }
-    public Rectangle rightField(){
-        return new Rectangle(x+width,y ,width/15,height);
-    }
-    public Rectangle leftField(){
-        return new Rectangle(x,y ,width/15,height);
     }
     public Rectangle floorSpace(){
         return new Rectangle(x+width/15,y+height ,width-width/15,height/15);
