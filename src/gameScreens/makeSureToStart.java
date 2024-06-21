@@ -20,13 +20,11 @@ public class makeSureToStart extends JPanel {
         Image resizedPlayImage = playButtonImage.getImage().getScaledInstance(100, 40, Image.SCALE_SMOOTH);
         Image resizedBackImage = backButtonImage.getImage().getScaledInstance(100, 40, Image.SCALE_SMOOTH);
 
-       /* JLabel requirements = new JLabel("level requirements :" + levelRequirements + " coins");
-        requirements.setBounds(335,360,600,100);
-        Font font = new Font("Algerian", Font.BOLD, 35);
-        requirements.setFont(font);
-        this.add(requirements);
-
-        */
+       JLabel requirements = new JLabel("level requirements :" + level.getCoinsRequired() + " coins");
+       requirements.setBounds(335,360,600,100);
+       Font font = new Font("Algerian", Font.BOLD, 35);
+       requirements.setFont(font);
+       this.add(requirements);
 
         JButton startGame = new JButton();
         startGame.setBounds(680,615,100,40);

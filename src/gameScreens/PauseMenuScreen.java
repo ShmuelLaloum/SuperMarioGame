@@ -14,7 +14,8 @@ public class PauseMenuScreen extends JPanel {
     private static levelsMenu leMenu;
     public static final ImageIcon backgroundImage = ImageManager.getImageIcon(ImageManager.ImageName.OPTIONS_BACKGROUND);
     public static final ImageIcon quitGameButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.QUIT_GAME_BUTTON);
-    private static final ImageIcon continueButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.CONTINUE_BUTTON);
+    public static final ImageIcon continueButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.CONTINUE_BUTTON);
+    private static final ImageIcon retryLevelButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.RETRY_LEVEL_BUTTON2);
     public PauseMenuScreen(level levelCurrent,levelsMenu levelsMenu,GameFrame gameFrame, window window){
         this.setOpaque(false);
         this.setLayout(null);
@@ -24,9 +25,10 @@ public class PauseMenuScreen extends JPanel {
         gaFrame = gameFrame;
         Image resizedQuitGameImage = quitGameButtonImage.getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
         Image resizedContinueImage = continueButtonImage.getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
+        Image resizedretryLevelImage = retryLevelButtonImage.getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
 
         JButton quitGameButton = new JButton();
-        quitGameButton.setBounds(660,500,180,65);
+        quitGameButton.setBounds(660,450,180,65);
         quitGameButton.setOpaque(false);
         quitGameButton.setContentAreaFilled(false);
         quitGameButton.setBorderPainted(false);
@@ -41,8 +43,22 @@ public class PauseMenuScreen extends JPanel {
             window.switchPanel(leMenu);
         });
 
+        JButton retryLevelButton = new JButton();
+        retryLevelButton.setBounds(quitGameButton.getX(),quitGameButton.getY()+97,180,65);
+        retryLevelButton.setOpaque(false);
+        retryLevelButton.setContentAreaFilled(false);
+        retryLevelButton.setBorderPainted(false);
+        retryLevelButton.setFocusPainted(false);
+        retryLevelButton.setIcon(new ImageIcon(resizedretryLevelImage));
+
+        retryLevelButton.addActionListener(event -> {
+            level = gameScreens.levelsMenu.resetLevel(levelCurrent);
+            gaFrame = new GameFrame(level,levelsMenu,window);
+            window.switchPanel(gaFrame);
+        });
+
         JButton continueButton = new JButton();
-        continueButton.setBounds(quitGameButton.getX(),quitGameButton.getY()+97,180,65);
+        continueButton.setBounds(retryLevelButton.getX(),retryLevelButton.getY()+97,180,65);
         continueButton.setOpaque(false);
         continueButton.setContentAreaFilled(false);
         continueButton.setBorderPainted(false);
@@ -53,6 +69,8 @@ public class PauseMenuScreen extends JPanel {
             gaFrame = new GameFrame(level,levelsMenu,window);
             window.switchPanel(gaFrame);
         });
+
+        this.add(retryLevelButton);
         this.add(continueButton);
         this.add(quitGameButton);
 

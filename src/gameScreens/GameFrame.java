@@ -13,6 +13,7 @@ import java.util.List;
 public class GameFrame extends JPanel {
     private int collectedCoins = 0;
     public static final ImageIcon backgroundImage = ImageManager.getImageIcon(ImageManager.ImageName.LEVEL1_BACKGROUND);
+    public static final ImageIcon pauseButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.PAUSE_BUTTON);
     private int imageX = 0;
     private int startPoint;
     private int endPoint;
@@ -45,9 +46,15 @@ public class GameFrame extends JPanel {
         this.setFocusable(true);
         this.levelX = level;
         this.window = window;
+        Image resizedPauseImage = pauseButtonImage.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
         JButton pauseButton = new JButton();
-        pauseButton.setBounds(500,90,90,90);
+        pauseButton.setOpaque(false);
+        pauseButton.setContentAreaFilled(false);
+        pauseButton.setBorderPainted(false);
+        pauseButton.setFocusPainted(false);
+        pauseButton.setIcon(new ImageIcon(resizedPauseImage));
+        pauseButton.setBounds(5,5,50,50);
         pauseButton.addActionListener(e -> {
             if (mario.isAlive()) {
                 pauseMenuScreen = new PauseMenuScreen(levelX, leMenu, this, window);

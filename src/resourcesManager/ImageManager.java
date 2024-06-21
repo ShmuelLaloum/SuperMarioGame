@@ -48,12 +48,9 @@ public class ImageManager {
         RETRY_LEVEL_BUTTON("retryLevelButton.png"),
         OPTIONS_BACKGROUND("optionsBackground.png"),
         QUIT_GAME_BUTTON("quitGameButton.png"),
-        CONTINUE_BUTTON("continueButton.png");
-
-
-
-
-
+        CONTINUE_BUTTON("continueButton.png"),
+        RETRY_LEVEL_BUTTON2("retryLevelButton2.png"),
+        PAUSE_BUTTON("pauseButton.png");
 
         private final String fileName;
 
