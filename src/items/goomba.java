@@ -137,7 +137,9 @@ public class goomba implements enemyAble, needLandAble {
     public int getY() {
         return y;
     }
-
+    public int getDirection(){
+        return direction;
+    }
     public synchronized void setActive(boolean newActive) {
         if (newActive && !active){
             active = true;

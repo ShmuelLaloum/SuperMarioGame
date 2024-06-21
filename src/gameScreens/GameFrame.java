@@ -220,7 +220,7 @@ public class GameFrame extends JPanel {
         }
         for (goomba goomba : goombas) {
             for (groundAble groundAble : groundAbles) {
-                if ((goomba.getY() >= goomba.getGround()) && collision(goomba.body(), groundAble.body()) /*collision(goomba.rightField(), groundAble.leftField()) || collision(goomba.leftField(),groundAble.rightField())*/) {
+                if ((goomba.getY() >= goomba.getGround()) && ((collision(goomba.rightField(), groundAble.leftField()) && goomba.getDirection() == 1) || (collision(goomba.leftField(),groundAble.rightField()) && goomba.getDirection() == -1))) {
                     goomba.ChangeDirection();
                 }
             }
