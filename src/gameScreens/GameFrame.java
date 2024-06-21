@@ -188,8 +188,9 @@ public class GameFrame extends JPanel {
         }
 
         for (mushroom m : mushrooms) {
-            for (groundAble groundAble : groundAbles) {
-                if (collision(m.body(), groundAble.body())) {
+            for (groundAble ground : groundAbles) {
+                if ((m.getY() >= m.getGround()) && ((collision(m.rightField(), ground.leftField()) && m.getDirection() == 1) ||
+                        (collision(m.leftField(),ground.rightField()) && m.getDirection() == -1))) {
                     m.ChangeDirection();
                 }
             }
@@ -218,10 +219,11 @@ public class GameFrame extends JPanel {
                 break;
             }
         }
-        for (goomba goomba : goombas) {
-            for (groundAble groundAble : groundAbles) {
-                if ((goomba.getY() >= goomba.getGround()) && ((collision(goomba.rightField(), groundAble.leftField()) && goomba.getDirection() == 1) || (collision(goomba.leftField(),groundAble.rightField()) && goomba.getDirection() == -1))) {
-                    goomba.ChangeDirection();
+        for (goomba g : goombas) {
+            for (groundAble ground : groundAbles) {
+                if ((g.getY() >= g.getGround()) && ((collision(g.rightField(), ground.leftField()) && g.getDirection() == 1) ||
+                        (collision(g.leftField(),ground.rightField()) && g.getDirection() == -1))) {
+                    g.ChangeDirection();
                 }
             }
         }

@@ -73,6 +73,12 @@ public class mushroom implements needLandAble {
             landUpdateThread.interrupt();
         }
     }
+    public int getDirection(){
+        return direction;
+    }
+    public int getGround(){
+        return Ground;
+    }
 
 
     public void  setGround(int newG){
@@ -98,5 +104,12 @@ public class mushroom implements needLandAble {
     }
     public Rectangle floorSpace(){
         return new Rectangle(x+width/15,y+height ,width-width/15,height/15);
+    }
+    public Rectangle rightField() {
+        return new Rectangle(x + width, y, width / 15, height);
+    }
+
+    public Rectangle leftField() {
+        return new Rectangle(x, y, width / 15, height);
     }
 }
