@@ -30,19 +30,18 @@ public class Person implements needLandAble{
     private options status;
     private boolean touchGround = false;
     private boolean CanGoLeft = true,CanGoRight = true,CanJump= true;
-    private boolean active;
+    private volatile boolean active = false;  // מתחיל כ-false
+    private Thread landUpdateThread;
 
     public Person(int x, int y) {
         status = options.NORMAL;
         this.x = x;
         this.y = y;
         this.alive = true;
-        active = true;
         image = ImageManager.getImageIcon(ImageManager.ImageName.MARIO_GOES_RIGHT);//imageMarioGoesRight;
-        //updateGroundBasedOnClosestCube();
-        LandUpdate();
-
-
+    }
+    private void createThread() {
+        landUpdateThread = new Thread(this::LandUpdate);
     }
     public void setGround(int newY){
         this.ground = newY;
@@ -131,10 +130,10 @@ public class Person implements needLandAble{
             int sum = 0;
             while (this.y <= heightFrame) {
                 if (active) {
-                    y++;
+                    y+=2;
                     clarity = sum % 5 == 0 ? 1f : 0.5f;
                     try {
-                        Thread.sleep(120);
+                        Thread.sleep(5);
                     } catch (Exception ignored) {
                     }
                     sum++;
@@ -184,28 +183,25 @@ public class Person implements needLandAble{
         return CanGoLeft;
     }
     public void LandUpdate(){
-        new Thread(()->{
-            boolean k = false;
-            while (isAlive()){
-                if (active) {
-                    if (!heJumps && y < ground) {
-                        if (!k)
-                            image = image == imageMarioGoesLeft ? imageMarioJumpsLeft : image == imageMarioGoesRight ? imageMarioJumpsRight : image;
-                        y++;
-                        k = true;
-                        touchGround = false;
-                    } else if (k) {
-                        image = image == imageMarioJumpsLeft ? imageMarioGoesLeft : image == imageMarioJumpsRight ? imageMarioGoesRight : image;
-                        k = false;
-                        touchGround = true;
-                    }
-                }
-                try {
-                    Thread.sleep(3);
-                } catch (Exception e) {
-                }
+        boolean k = false;
+        while (isAlive() && active){
+            if (!heJumps && y < ground) {
+                if (!k)
+                    image = image == imageMarioGoesLeft ? imageMarioJumpsLeft : image == imageMarioGoesRight ? imageMarioJumpsRight : image;
+                y++;
+                k = true;
+                touchGround = false;
+            } else if (k) {
+                image = image == imageMarioJumpsLeft ? imageMarioGoesLeft : image == imageMarioJumpsRight ? imageMarioGoesRight : image;
+                k = false;
+                touchGround = true;
             }
-        }).start();
+
+            try {
+                Thread.sleep(3);
+            } catch (Exception e) {
+            }
+        }
     }
 
     public Rectangle body(){
@@ -249,8 +245,15 @@ public class Person implements needLandAble{
     public options getStatus(){
         return status;
     }
-    public void setActive(boolean newActive){
-        active = newActive;
+    public void setActive(boolean newActive) {
+        if (newActive && !active) {
+            active = true;
+            createThread();
+            landUpdateThread.start();
+        } else if (!newActive && active) {
+            active = false;
+            landUpdateThread.interrupt();
+        }
     }
 
 }

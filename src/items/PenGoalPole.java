@@ -12,17 +12,21 @@ public class PenGoalPole implements needLandAble{
     private int ground;
     public static final int width = 70;
     public static final int height = 150;
+    private volatile boolean active = false;  // מתחיל כ-false
+    private Thread landUpdateThread;
 
     public PenGoalPole(int x, int y){
         this.x = x;
         this.y = y;
-        LandUpdate();
     }
     public void paint(Graphics graphics) {
         Graphics2D g2d = (Graphics2D) graphics.create();
         g2d.drawImage(imageIcon.getImage(),x, y, width, height, null);
         g2d.drawImage(brokenCube.image.getImage(),x+width/5,y+height-Cube.height,Cube.width,Cube.height,null);
         g2d.dispose();
+    }
+    private void createThread() {
+        landUpdateThread = new Thread(this::LandUpdate);
     }
     public void setX(int newX){
         x = newX;
@@ -36,18 +40,15 @@ public class PenGoalPole implements needLandAble{
 
     @Override
     public void LandUpdate() {
-        new Thread(()->{
-            while (true){
-                if ( y < ground){
-                    y++;
-                }
-                try {
-                    Thread.sleep(2);
-                }catch (Exception e){
-
-                }
+        while (active){
+            if ( y < ground){
+                y++;
             }
-        }).start();
+            try {
+                Thread.sleep(2);
+            }catch (Exception e){
+            }
+        }
     }
 
     @Override
@@ -69,4 +70,15 @@ public class PenGoalPole implements needLandAble{
     public int getWidth() {
         return width;
     }
+    public void setActive(boolean newActive) {
+        if (newActive && !active) {
+            active = true;
+            createThread();  // יצירת התרד רק אם הוא עדיין לא קיים או שהוא לא פעיל
+            landUpdateThread.start();
+        } else if (!newActive && active) {
+            active = false;
+            landUpdateThread.interrupt();
+        }
+    }
+
 }

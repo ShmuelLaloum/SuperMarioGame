@@ -29,6 +29,7 @@ public class GameFrame extends JPanel {
     private List<brokenCube> brokenCubes = new ArrayList<>();
     private List<PenGoalPole> penGoalPoles = new ArrayList<>();
     private List<castle> castles = new ArrayList<>();
+    private List<Cube> deadSpaceCubes = new ArrayList<>();
     private Person mario;
     private final level levelX;
     private final window window;
@@ -48,15 +49,17 @@ public class GameFrame extends JPanel {
         JButton pauseButton = new JButton();
         pauseButton.setBounds(500,90,90,90);
         pauseButton.addActionListener(e -> {
-            pauseMenuScreen = new PauseMenuScreen(levelX,leMenu,this,window);
-            this.setLayout(new BorderLayout());
-            setActive(false);
-            levelX.setEndPointX(endPoint);
-            levelX.setStartPointX(startPoint);
-            this.add(pauseMenuScreen);
-            this.remove(pauseButton);
-            this.revalidate();
-            this.repaint();
+            if (mario.isAlive()) {
+                pauseMenuScreen = new PauseMenuScreen(levelX, leMenu, this, window);
+                this.setLayout(new BorderLayout());
+                setActive(false);
+                levelX.setEndPointX(endPoint);
+                levelX.setStartPointX(startPoint);
+                this.add(pauseMenuScreen);
+                this.remove(pauseButton);
+                this.revalidate();
+                this.repaint();
+            }
         });
         this.add(pauseButton);
 
@@ -110,12 +113,19 @@ public class GameFrame extends JPanel {
         startPoint = levelX.getStartPointX();
         endPoint = levelX.getEndPointX();
 
+        for (int x = 0 ; x < window.getWidth();x++){
+            deadSpaceCubes.add(new Cube(x,window.getHeight()+Cube.height, Cube.type.OTHER));
+        }
+        groundAbles.addAll(deadSpaceCubes);
+
     }
     public void mainGameLoop(){
         new Thread(() -> {
             while (!mario.isOutOfFrame() &&  mario.getX() < (endPoint-mario.getWidth())) {
                 if (!stop) {
-                    updateGameObjects();
+                    if (mario.isAlive()) {
+                        updateGameObjects();
+                    }
                     this.repaint();
                     try {
                         Thread.sleep(2);
@@ -167,10 +177,12 @@ public class GameFrame extends JPanel {
                 Object c = l.hasTaken();
                 if (c instanceof Coin) {
                     coins.add((Coin) c);
+                    ((Coin) c).setActive(true);
                     ((Coin) c).collected();
                 } else if (c instanceof mushroom m) {
                     needLandAbles.add(m);
                     mushrooms.add(m);
+                    m.setActive(true);
                 }
             }
         }
@@ -193,7 +205,7 @@ public class GameFrame extends JPanel {
             }
         }
 
-        for (int i = 0; i < goombas.size() ; i++) {
+        for (int i = 0; i < goombas.size(); i++) {
             if (!goombas.get(i).isAlive()){
                 needLandAbles.remove(goombas.get(i));
                 enemyAbles.remove(goombas.get(i));
@@ -203,11 +215,12 @@ public class GameFrame extends JPanel {
                 mario.setTouchGround(true);
                 mario.jump();
                 goombas.get(i).die();
+                break;
             }
         }
         for (goomba goomba : goombas) {
             for (groundAble groundAble : groundAbles) {
-                if (collision(goomba.body(), groundAble.body())) {
+                if ((goomba.getY() >= goomba.getGround()) && collision(goomba.body(), groundAble.body()) /*collision(goomba.rightField(), groundAble.leftField()) || collision(goomba.leftField(),groundAble.rightField())*/) {
                     goomba.ChangeDirection();
                 }
             }
@@ -222,10 +235,11 @@ public class GameFrame extends JPanel {
             }
         }
 
-        for (int i = 0; i < enemyAbles.size(); i++) {
+        for (int i = 0; i < enemyAbles.size() && mario.isAlive(); i++) {
             if (collision(enemyAbles.get(i).body(), mario.body())) {
                 if (mario.getStatus() == Person.options.NORMAL) {
-                    mario.die(getHeight());
+                    mario.die(window.getHeight());
+                    needLandAbles.remove(mario);
                 } else {
                     mario.normalBody();
                     if (enemyAbles.get(i) instanceof goomba) {
@@ -238,7 +252,6 @@ public class GameFrame extends JPanel {
                                 b.StopsBullet();
                                 break;
                             }
-
                     }else {
                         for (bigTube b : bigTubes)
                             if (b.getCarnivorousPlant() == enemyAbles.get(i)){
@@ -258,6 +271,9 @@ public class GameFrame extends JPanel {
         }
 
         for (needLandAble needLandAble : needLandAbles) {
+            if (!mario.isAlive()){
+                break;
+            }
             if (needLandAble instanceof Person) {
                 mario.setTouchGround(false);
             }
@@ -281,6 +297,12 @@ public class GameFrame extends JPanel {
 
             if (closestCube != null) {
                 needLandAble.setGround(closestCube.getY() - needLandAble.getHeight());
+            }
+        }
+        for (Cube d : deadSpaceCubes){
+            if (mario.isAlive() && collision(mario.floorSpace(),d.upperArea())){
+                mario.die(window.getHeight());
+                break;
             }
         }
     }
@@ -402,5 +424,9 @@ public class GameFrame extends JPanel {
             l.setActive(newActive);
         for (mushroom m : mushrooms)
             m.setActive(newActive);
+        for (castle c : castles)
+            c.setActive(newActive);
+        for (PenGoalPole p : penGoalPoles)
+            p.setActive(newActive);
     }
 }

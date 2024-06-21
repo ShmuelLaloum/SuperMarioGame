@@ -66,4 +66,10 @@ public class Cube implements groundAble {
     public ImageIcon getImage(){
         return image;
     }
+    public Rectangle rightField(){
+        return new Rectangle(x+width,y ,width/15,height);
+    }
+    public Rectangle leftField(){
+        return new Rectangle(x,y,width/15,height);
+    }
 }

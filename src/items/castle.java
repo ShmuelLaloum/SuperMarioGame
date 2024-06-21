@@ -12,16 +12,20 @@ public class castle implements needLandAble {
     private int ground;
     public static final int width = 200;
     public static final int height = 200;
+    private volatile boolean active = false;  // מתחיל כ-false
+    private Thread landUpdateThread;
 
     public castle(int x, int y){
         this.x = x;
         this.y = y;
-        LandUpdate();
     }
     public void paint(Graphics graphics) {
         Graphics2D g2d = (Graphics2D) graphics.create();
         g2d.drawImage(imageIcon.getImage(),x, y, width, height, null);
         g2d.dispose();
+    }
+    private void createThread() {
+        landUpdateThread = new Thread(this::LandUpdate);
     }
     public void setX(int newX){
         x = newX;
@@ -35,18 +39,17 @@ public class castle implements needLandAble {
 
     @Override
     public void LandUpdate() {
-        new Thread(()->{
-            while (true){
-                if ( y < ground){
-                    y++;
-                }
-                try {
-                    Thread.sleep(2);
-                }catch (Exception e){
-
-                }
+        while (active) {
+            if (y < ground) {
+                y++;
             }
-        }).start();
+            try {
+                Thread.sleep(2);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
     }
 
     @Override
@@ -67,5 +70,15 @@ public class castle implements needLandAble {
     @Override
     public int getWidth() {
         return width;
+    }
+    public synchronized void setActive(boolean newActive) {
+        if (newActive && !active){
+            active = true;
+            createThread();  // יצירת התרדים מחדש כדי שנוכל להפעילם שוב
+            landUpdateThread.start();
+        } else if (!newActive && active) {
+            active = false;
+            landUpdateThread.interrupt();
+        }
     }
 }

@@ -21,7 +21,7 @@ public class bigTube implements groundAble{
         this.width = width;
         this.height = height;
         status = type;
-        d = x/15;
+        d = width/4;
 
         if (status == bigTube.type.enemy){
             carnivorousPlant = new CarnivorousPlant(x+d,y+y/50,width/2,width/2);
@@ -80,5 +80,11 @@ public class bigTube implements groundAble{
         if (carnivorousPlant != null) {
             carnivorousPlant.setActive(newActive);
         }
+    }
+    public Rectangle rightField(){
+        return new Rectangle(x+width,y ,width/15,height);
+    }
+    public Rectangle leftField(){
+        return new Rectangle(x,y,width/15,height);
     }
 }

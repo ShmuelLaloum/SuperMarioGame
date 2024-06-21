@@ -20,7 +20,6 @@ public class Coin{
     public Coin(int x, int y){
         this.x = x;
         this.y = y;
-        active = true;
     }
     public void paint(Graphics graphics) {
         Graphics2D g2d = (Graphics2D) graphics.create();
@@ -67,27 +66,6 @@ public class Coin{
     }
     public boolean isFinishedCollecting(){
         return finishedCollected;
-    }
-    public void upAndDown(){
-        new Thread(()->{
-            int sum = 0;
-            while (sum < 100){
-                if (active) {
-                    if (sum < 50) {
-                        y--;
-                    } else {
-                        y++;
-                    }
-                    sum++;
-                }
-                try {
-                    Thread.sleep(2);
-                } catch (Exception e) {
-
-                }
-
-            }
-        }).start();
     }
     public void setActive(boolean newActive){
         active = newActive;
