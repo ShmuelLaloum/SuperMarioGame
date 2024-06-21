@@ -80,7 +80,7 @@ public class Person implements needLandAble{
             Thread n = new Thread(() -> {
                 SoundManager.playSound(SoundManager.SoundName.MARIO_JUMP,-10.0f);
                 int sum = 0;
-                while ((sum < jumpHeight )) {
+                while ((sum < jumpHeight ) && heJumps) {
                     if (active) {
                         if (sum < (jumpHeight / 2) && CanJump && alive) {
                             y--;
@@ -190,11 +190,9 @@ public class Person implements needLandAble{
                     image = image == imageMarioGoesLeft ? imageMarioJumpsLeft : image == imageMarioGoesRight ? imageMarioJumpsRight : image;
                 y++;
                 k = true;
-                touchGround = false;
             } else if (k) {
                 image = image == imageMarioJumpsLeft ? imageMarioGoesLeft : image == imageMarioJumpsRight ? imageMarioGoesRight : image;
                 k = false;
-                touchGround = true;
             }
 
             try {
