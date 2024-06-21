@@ -40,13 +40,13 @@ public class GameFrame extends JPanel {
     private static PauseMenuScreen pauseMenuScreen;
     private static endLevelScreen endLevelScreen;
     public GameFrame(level level,levelsMenu levelsMenu, window window) {
-        leMenu = levelsMenu;
-        this.setLayout(null);
         SoundManager.loopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC,-10.0f);
+        Image resizedPauseImage = pauseButtonImage.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+        this.setLayout(null);
         this.setFocusable(true);
+        leMenu = levelsMenu;
         this.levelX = level;
         this.window = window;
-        Image resizedPauseImage = pauseButtonImage.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
         JButton pauseButton = new JButton();
         pauseButton.setOpaque(false);
@@ -57,11 +57,11 @@ public class GameFrame extends JPanel {
         pauseButton.setBounds(5,5,50,50);
         pauseButton.addActionListener(e -> {
             if (mario.isAlive()) {
-                pauseMenuScreen = new PauseMenuScreen(levelX, leMenu, this, window);
-                this.setLayout(new BorderLayout());
-                setActive(false);
                 levelX.setEndPointX(endPoint);
                 levelX.setStartPointX(startPoint);
+                setActive(false);
+                pauseMenuScreen = new PauseMenuScreen(levelX, leMenu, this, window);
+                this.setLayout(new BorderLayout());
                 this.add(pauseMenuScreen);
                 this.remove(pauseButton);
                 this.revalidate();

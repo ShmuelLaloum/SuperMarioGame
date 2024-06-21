@@ -97,20 +97,15 @@ public class Person implements needLandAble{
                 image = image == imageMarioJumpsLeft ? imageMarioGoesLeft : imageMarioGoesRight;
                 heJumps = false;
                 touchGround = false;
-
-
-                //m = false;
             });
             n.start();
         }
     }
     public void moveLeft(){
-        if (CanGoLeft /*&& x-walkingDistance > walkingDistance*2*/) {
+        if (CanGoLeft) {
             if (image != imageMarioGoesLeft){
                 image = heJumps ? imageMarioJumpsLeft : imageMarioGoesLeft;
             }
-            //this.x -= walkingDistance;
-            //s1.moveScreen(walkingDistance);
         }
     }
     public void moveRight(){
@@ -118,8 +113,6 @@ public class Person implements needLandAble{
             if (image != imageMarioGoesRight){
                 image = heJumps ? imageMarioJumpsRight : imageMarioGoesRight;
             }
-            //this.x+=walkingDistance;
-            //s1.moveScreen(-walkingDistance);
         }
     }
 

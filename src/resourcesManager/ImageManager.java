@@ -50,7 +50,8 @@ public class ImageManager {
         QUIT_GAME_BUTTON("quitGameButton.png"),
         CONTINUE_BUTTON("continueButton.png"),
         RETRY_LEVEL_BUTTON2("retryLevelButton2.png"),
-        PAUSE_BUTTON("pauseButton.png");
+        PAUSE_BUTTON("pauseButton.png"),
+        LOGO("logo.png");
 
         private final String fileName;
 
