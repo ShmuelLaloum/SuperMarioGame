@@ -138,7 +138,6 @@ public class PauseMenuScreen extends JPanel {
     }
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // אופציונלי: יישום אפקט טשטוש פשוט (טשטוש מורכב דורש יותר מאמץ)
         Graphics2D g2d = (Graphics2D) g.create();
         g2d.setColor(new Color(255, 255, 255, 128)); // לבן חצי-שקוף
         g2d.fillRect(0, 0, 1540, 941);
