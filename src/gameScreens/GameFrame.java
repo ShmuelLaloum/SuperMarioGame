@@ -35,12 +35,15 @@ public class GameFrame extends JPanel {
     private final level levelX;
     private final window window;
     private boolean stop = false;
+    private static boolean end = true;
     private static levelsMenu leMenu;
     private Controller controller;
     private static PauseMenuScreen pauseMenuScreen;
     private static endLevelScreen endLevelScreen;
     public GameFrame(level level,levelsMenu levelsMenu, window window) {
-        SoundManager.loopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC,-10.0f);
+        end = false;
+        if (SoundManager.isPlayBackGroundMusic())
+            SoundManager.loopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC);
         Image resizedPauseImage = pauseButtonImage.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         this.setLayout(null);
         this.setFocusable(true);
@@ -128,7 +131,7 @@ public class GameFrame extends JPanel {
     }
     public void mainGameLoop(){
         new Thread(() -> {
-            while (!mario.isOutOfFrame() &&  mario.getX() < (endPoint-mario.getWidth())) {
+            while (!mario.isOutOfFrame() &&  mario.getX() < (endPoint-mario.getWidth()) && !end) {
                 if (!stop) {
                     if (mario.isAlive()) {
                         updateGameObjects();
@@ -142,9 +145,11 @@ public class GameFrame extends JPanel {
                 }
             }
             setActive(false);
-            SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC);
-            endLevelScreen = new endLevelScreen((mario.isAlive() && collectedCoins >= levelX.getCoinsRequired() ? gameScreens.endLevelScreen.Status.PASS : gameScreens.endLevelScreen.Status.FAIL),leMenu,levelX,this,window);
-            window.switchPanel(endLevelScreen);
+            if (!end) {
+                SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC);
+                endLevelScreen = new endLevelScreen((mario.isAlive() && collectedCoins >= levelX.getCoinsRequired() ? gameScreens.endLevelScreen.Status.PASS : gameScreens.endLevelScreen.Status.FAIL), leMenu, levelX, this, window);
+                window.switchPanel(endLevelScreen);
+            }
         }).start();
     }
     public synchronized void updateGameObjects() {
@@ -205,7 +210,8 @@ public class GameFrame extends JPanel {
 
         for (mushroom m : mushrooms){
             if (collision(mario.body(), m.body())) {
-                SoundManager.playSound(SoundManager.SoundName.MARIO_EAT_MUSHROOM);
+                if (SoundManager.isPlayMusicEffect())
+                    SoundManager.playSound(SoundManager.SoundName.MARIO_EAT_MUSHROOM);
                 mario.bodyGrows();
                 needLandAbles.remove(m);
                 mushrooms.remove(m);
@@ -214,16 +220,15 @@ public class GameFrame extends JPanel {
         }
 
         for (int i = 0; i < goombas.size(); i++) {
-            if (!goombas.get(i).isAlive()){
+            if (goombas.get(i).isFinish()){
                 needLandAbles.remove(goombas.get(i));
                 enemyAbles.remove(goombas.get(i));
                 goombas.remove(i--);
-            }else if (collision(mario.floorSpace(), goombas.get(i).ceilingArea())) {
+            }else if (collision(mario.floorSpace(), goombas.get(i).ceilingArea()) && goombas.get(i).isAlive()) {
                 mario.setHeJumps(false);
                 mario.setTouchGround(true);
                 mario.jump();
                 goombas.get(i).die();
-                break;
             }
         }
         for (goomba g : goombas) {
@@ -280,9 +285,6 @@ public class GameFrame extends JPanel {
         }
 
         for (needLandAble needLandAble : needLandAbles) {
-            if (!mario.isAlive()){
-                break;
-            }
             if (needLandAble instanceof Person) {
                 mario.setTouchGround(false);
             }
@@ -437,5 +439,8 @@ public class GameFrame extends JPanel {
             c.setActive(newActive);
         for (PenGoalPole p : penGoalPoles)
             p.setActive(newActive);
+    }
+    public void setEnd(boolean newEnd){
+        end = newEnd;
     }
 }

@@ -78,7 +78,8 @@ public class Person implements needLandAble{
             }
             SoundManager.stopSound(SoundManager.SoundName.MARIO_JUMP);
             Thread n = new Thread(() -> {
-                SoundManager.playSound(SoundManager.SoundName.MARIO_JUMP,-10.0f);
+                if (SoundManager.isPlayMusicEffect())
+                    SoundManager.playSound(SoundManager.SoundName.MARIO_JUMP,-10.0f);
                 int sum = 0;
                 while ((sum < jumpHeight ) && heJumps) {
                     if (active) {
@@ -117,7 +118,8 @@ public class Person implements needLandAble{
     }
 
     public void die(int heightFrame){
-        SoundManager.playSound(SoundManager.SoundName.MARIO_DIE);
+        if (SoundManager.isPlayMusicEffect())
+            SoundManager.playSound(SoundManager.SoundName.MARIO_DIE);
         this.alive = false;
         Thread n = new Thread(() -> {
             int sum = 0;

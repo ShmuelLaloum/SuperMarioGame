@@ -29,7 +29,8 @@ public class SoundManager {
     }
 
     public static final Map<SoundName, Clip> soundClips = new HashMap<>();
-
+    private static boolean playBackGroundMusic = true;
+    private static boolean playMusicEffect = true;
     static {
         // טוען את כל הסאונדים מראש
         for (SoundName soundName : SoundName.values()) {
@@ -119,5 +120,18 @@ public class SoundManager {
                 e.printStackTrace(); // Log the error if the control is not supported
             }
         }
+    }
+    public static void setPlayMusicEffect(boolean newCan){
+        playMusicEffect = newCan;
+    }
+    public static void setPlayBackGroundMusic(boolean newCan){
+        playBackGroundMusic = newCan;
+
+    }
+    public static boolean isPlayBackGroundMusic(){
+        return playBackGroundMusic;
+    }
+    public static boolean isPlayMusicEffect(){
+        return playMusicEffect;
     }
 }

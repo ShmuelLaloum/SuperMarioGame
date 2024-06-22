@@ -51,7 +51,11 @@ public class ImageManager {
         CONTINUE_BUTTON("continueButton.png"),
         RETRY_LEVEL_BUTTON2("retryLevelButton2.png"),
         PAUSE_BUTTON("pauseButton.png"),
-        LOGO("logo.png");
+        LOGO("logo.png"),
+        BACKGROUND_MUSIC_ACTIVE_BUTTON("backgroundMusicActive.png"),
+        BACKGROUND_MUSIC_NO_ACTIVE_BUTTON("backgroundMusicNoActive.png"),
+        MUSIC_EFFECT_ACTIVE_BUTTON("musicEffectActive.png"),
+        MUSIC_EFFECT_NO_ACTIVE_BUTTON("musicEffectNoActive.png");
 
         private final String fileName;
 

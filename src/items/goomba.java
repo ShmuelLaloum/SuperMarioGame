@@ -16,11 +16,11 @@ public class goomba implements enemyAble, needLandAble {
     public static final int width = 35;
     public static final int height = 35;
     private int direction = -1;
-    private boolean running = true;
     private volatile boolean active = false;  // מתחיל כ-false
     private volatile boolean alive;
     private Thread moveThread;
     private Thread landUpdateThread;
+    private boolean finish = false;
 
     public goomba(int x, int y) {
         this.x = x;
@@ -35,7 +35,7 @@ public class goomba implements enemyAble, needLandAble {
     }
 
     private void move() {
-        while (active) {
+        while (active && alive) {
             this.x += direction;
             try {
                 Thread.sleep(50);
@@ -47,7 +47,7 @@ public class goomba implements enemyAble, needLandAble {
     }
 
     public void LandUpdate() {
-        while (active && isAlive()) {
+        while (active && alive) {
             if (y < Ground) {
                 y++;
             }
@@ -62,7 +62,7 @@ public class goomba implements enemyAble, needLandAble {
 
     public void paint(Graphics graphics) {
         Graphics2D g2d = (Graphics2D) graphics.create();
-        g2d.drawImage(imageIcon.getImage(), x, y + (!running ? height / 2 : 0), width, (!running ? height / 2 : height), null);
+        g2d.drawImage(imageIcon.getImage(), x, y + (!alive ? height / 2 : 0), width, (!alive ? height / 2 : height), null);
         g2d.dispose();
     }
 
@@ -101,8 +101,9 @@ public class goomba implements enemyAble, needLandAble {
     }
 
     public void die() {
-        running = false;
-        SoundManager.playSound(SoundManager.SoundName.GOOMBA_DIE, 6.0f);
+        alive = false;
+        if (SoundManager.isPlayMusicEffect())
+            SoundManager.playSound(SoundManager.SoundName.GOOMBA_DIE, 6.0f);
         imageIcon = ImageManager.getImageIcon(ImageManager.ImageName.GOOMBA_DIE);
         new Thread(() -> {
             try {
@@ -110,7 +111,7 @@ public class goomba implements enemyAble, needLandAble {
             } catch (Exception e) {
                 Thread.currentThread().interrupt();
             }
-            alive = false;
+            finish = true;
         }).start();
     }
 
@@ -139,6 +140,9 @@ public class goomba implements enemyAble, needLandAble {
     }
     public int getDirection(){
         return direction;
+    }
+    public boolean isFinish(){
+        return finish;
     }
     public synchronized void setActive(boolean newActive) {
         if (newActive && !active){

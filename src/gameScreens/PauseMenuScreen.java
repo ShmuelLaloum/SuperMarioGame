@@ -16,6 +16,11 @@ public class PauseMenuScreen extends JPanel {
     public static final ImageIcon quitGameButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.QUIT_GAME_BUTTON);
     public static final ImageIcon continueButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.CONTINUE_BUTTON);
     private static final ImageIcon retryLevelButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.RETRY_LEVEL_BUTTON2);
+    public static final ImageIcon playBackGroundActiveImage = ImageManager.getImageIcon(ImageManager.ImageName.BACKGROUND_MUSIC_ACTIVE_BUTTON);
+    public static final ImageIcon playBackGroundNoActiveImage = ImageManager.getImageIcon(ImageManager.ImageName.BACKGROUND_MUSIC_NO_ACTIVE_BUTTON);
+    public static final ImageIcon playEffectActiveImage = ImageManager.getImageIcon(ImageManager.ImageName.MUSIC_EFFECT_ACTIVE_BUTTON);
+    public static final ImageIcon playEffectNoActiveImage = ImageManager.getImageIcon(ImageManager.ImageName.MUSIC_EFFECT_NO_ACTIVE_BUTTON);
+
     public PauseMenuScreen(level levelCurrent,levelsMenu levelsMenu,GameFrame gameFrame, window window){
         this.setOpaque(false);
         this.setLayout(null);
@@ -26,6 +31,58 @@ public class PauseMenuScreen extends JPanel {
         Image resizedQuitGameImage = quitGameButtonImage.getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
         Image resizedContinueImage = continueButtonImage.getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
         Image resizedretryLevelImage = retryLevelButtonImage.getImage().getScaledInstance(180, 65, Image.SCALE_SMOOTH);
+        Image resizedPlayBackGroundActiveImage = playBackGroundActiveImage.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+        Image resizedPlayBackGroundNoActiveImage = playBackGroundNoActiveImage.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+        Image resizedplayEffectActiveImage = playEffectActiveImage.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+        Image resizedplayEffectNoActiveImage = playEffectNoActiveImage.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+
+
+        JButton playBackGroundButton = new JButton();
+        playBackGroundButton.setBounds(620,350,70,70);
+        playBackGroundButton.setOpaque(false);
+        playBackGroundButton.setContentAreaFilled(false);
+        playBackGroundButton.setBorderPainted(false);
+        playBackGroundButton.setFocusPainted(false);
+        if (SoundManager.isPlayBackGroundMusic()) {
+            playBackGroundButton.setIcon(new ImageIcon(resizedPlayBackGroundActiveImage));
+        }else {
+            playBackGroundButton.setIcon(new ImageIcon(resizedPlayBackGroundNoActiveImage));
+        }
+        this.add(playBackGroundButton);
+        playBackGroundButton.addActionListener(event -> {
+            SoundManager.setPlayBackGroundMusic(!SoundManager.isPlayBackGroundMusic());
+            if (SoundManager.isPlayBackGroundMusic()){
+                SoundManager.loopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC);
+                playBackGroundButton.setIcon(new ImageIcon(resizedPlayBackGroundActiveImage));
+            }else {
+                SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC);
+                playBackGroundButton.setIcon(new ImageIcon(resizedPlayBackGroundNoActiveImage));
+            }
+            leMenu.updateImageForMusicButtons();
+
+        });
+        JButton playEffectButton = new JButton();
+        playEffectButton.setBounds(playBackGroundButton.getX()+185, playBackGroundButton.getY(), 70, 70);
+        playEffectButton.setOpaque(false);
+        playEffectButton.setContentAreaFilled(false);
+        playEffectButton.setBorderPainted(false);
+        playEffectButton.setFocusPainted(false);
+        if (SoundManager.isPlayMusicEffect()) {
+            playEffectButton.setIcon(new ImageIcon(resizedplayEffectActiveImage));
+        }else {
+            playEffectButton.setIcon(new ImageIcon(resizedplayEffectNoActiveImage));
+        }
+        this.add(playEffectButton);
+        playEffectButton.addActionListener(event -> {
+            SoundManager.setPlayMusicEffect(!SoundManager.isPlayMusicEffect());
+            if (SoundManager.isPlayMusicEffect()){
+                playEffectButton.setIcon(new ImageIcon(resizedplayEffectActiveImage));
+            }else {
+                playEffectButton.setIcon(new ImageIcon(resizedplayEffectNoActiveImage));
+            }
+            leMenu.updateImageForMusicButtons();
+        });
+
 
         JButton quitGameButton = new JButton();
         quitGameButton.setBounds(660,450,180,65);
@@ -37,8 +94,11 @@ public class PauseMenuScreen extends JPanel {
 
         quitGameButton.addActionListener(event -> {
             SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_GAME_MUSIC);
-            SoundManager.loopSound(SoundManager.SoundName.BACKGROUND_LOBBY_MUSIC);
+            if (SoundManager.isPlayBackGroundMusic())
+                SoundManager.loopSound(SoundManager.SoundName.BACKGROUND_LOBBY_MUSIC);
+            gaFrame.setEnd(true);
             gaFrame = null;
+            level = null;
             leMenu.removePanelMakeSureToStart();
             window.switchPanel(leMenu);
         });
@@ -52,6 +112,7 @@ public class PauseMenuScreen extends JPanel {
         retryLevelButton.setIcon(new ImageIcon(resizedretryLevelImage));
 
         retryLevelButton.addActionListener(event -> {
+            gaFrame.setEnd(true);
             level = gameScreens.levelsMenu.resetLevel(levelCurrent);
             gaFrame = new GameFrame(level,levelsMenu,window);
             window.switchPanel(gaFrame);

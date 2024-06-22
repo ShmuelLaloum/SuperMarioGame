@@ -2,6 +2,7 @@ package gameScreens;
 
 import levels.*;
 import resourcesManager.ImageManager;
+import resourcesManager.SoundManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,9 +14,8 @@ public class levelsMenu extends JLayeredPane {
     public static final ImageIcon level4ButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.LEVEL4_BUTTON);
     public static final ImageIcon level5ButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.LEVEL5_BUTTON);
     public static final ImageIcon backgroundImage = ImageManager.getImageIcon(ImageManager.ImageName.LEVELS_MENU_SCREEN_BACKGROUND);
-
-    private static boolean levelIsComplete1 = true;
-    private static boolean levelIsComplete2 = false;
+    private static boolean levelIsComplete1 = false;
+    private static boolean levelIsComplete2 = true;
     private static boolean levelIsComplete3 = false;
     private static boolean levelIsComplete4 = false;
     private static boolean levelIsComplete5 = false;
@@ -27,6 +27,12 @@ public class levelsMenu extends JLayeredPane {
     private static level5 level5 = new level5();
     private static makeSureToStart makeSureToStart;
     private Window window;
+    private static JButton playEffectButton = new JButton();
+    private static JButton playBackGroundButton = new JButton();
+    public static final Image resizedPlayBackGroundActiveImage = ImageManager.getImageIcon(ImageManager.ImageName.BACKGROUND_MUSIC_ACTIVE_BUTTON).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+    public static final Image resizedPlayBackGroundNoActiveImage = ImageManager.getImageIcon(ImageManager.ImageName.BACKGROUND_MUSIC_NO_ACTIVE_BUTTON).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+    public static final Image resizedplayEffectActiveImage = ImageManager.getImageIcon(ImageManager.ImageName.MUSIC_EFFECT_ACTIVE_BUTTON).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+    public static final Image resizedplayEffectNoActiveImage = ImageManager.getImageIcon(ImageManager.ImageName.MUSIC_EFFECT_NO_ACTIVE_BUTTON).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 
     public levelsMenu(window window) {
         this.window = window;
@@ -36,6 +42,38 @@ public class levelsMenu extends JLayeredPane {
         Image resizedLevel3Image = level3ButtonImage.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
         Image resizedLevel4Image = level4ButtonImage.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
         Image resizedLevel5Image = level5ButtonImage.getImage().getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+
+
+        playBackGroundButton.setBounds(0, 0, 50, 50);
+        playBackGroundButton.setOpaque(false);
+        playBackGroundButton.setContentAreaFilled(false);
+        playBackGroundButton.setBorderPainted(false);
+        playBackGroundButton.setFocusPainted(false);
+        playBackGroundButton.setIcon(new ImageIcon(resizedPlayBackGroundActiveImage));
+        this.add(playBackGroundButton);
+        playBackGroundButton.addActionListener(event -> {
+            SoundManager.setPlayBackGroundMusic(!SoundManager.isPlayBackGroundMusic());
+            if (SoundManager.isPlayBackGroundMusic()){
+                SoundManager.loopSound(SoundManager.SoundName.BACKGROUND_LOBBY_MUSIC);
+            }else {
+                SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_LOBBY_MUSIC);
+            }
+            updateImageForMusicButtons();
+
+        });
+        playEffectButton.setBounds(playBackGroundButton.getX()+50, playBackGroundButton.getY(), 50, 50);
+        playEffectButton.setOpaque(false);
+        playEffectButton.setContentAreaFilled(false);
+        playEffectButton.setBorderPainted(false);
+        playEffectButton.setFocusPainted(false);
+        playEffectButton.setIcon(new ImageIcon(resizedplayEffectActiveImage));
+        this.add(playEffectButton);
+        playEffectButton.addActionListener(event -> {
+            SoundManager.setPlayMusicEffect(!SoundManager.isPlayMusicEffect());
+            updateImageForMusicButtons();
+        });
+
+
 
         JButton level1Button = new JButton();
         level1Button.setBounds(175, 390, 70, 70);
@@ -221,5 +259,18 @@ public class levelsMenu extends JLayeredPane {
         this.repaint();
         this.requestFocusInWindow();
         enableAllButtons();
+    }
+    public void updateImageForMusicButtons(){
+        if (SoundManager.isPlayBackGroundMusic()) {
+            playBackGroundButton.setIcon(new ImageIcon(resizedPlayBackGroundActiveImage));
+        }else {
+            playBackGroundButton.setIcon(new ImageIcon(resizedPlayBackGroundNoActiveImage));
+        }
+        if (SoundManager.isPlayMusicEffect()) {
+            playEffectButton.setIcon(new ImageIcon(resizedplayEffectActiveImage));
+        }else {
+            playEffectButton.setIcon(new ImageIcon(resizedplayEffectNoActiveImage));
+        }
+        System.out.println("D");
     }
 }

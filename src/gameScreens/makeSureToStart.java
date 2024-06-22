@@ -20,28 +20,40 @@ public class makeSureToStart extends JPanel {
         Image resizedPlayImage = playButtonImage.getImage().getScaledInstance(100, 40, Image.SCALE_SMOOTH);
         Image resizedBackImage = backButtonImage.getImage().getScaledInstance(100, 40, Image.SCALE_SMOOTH);
 
-       JLabel requirements = new JLabel("level requirements :" + level.getCoinsRequired() + " coins");
-       requirements.setBounds(335,360,600,100);
+       JLabel requirements = new JLabel();
+       if (level.isBuilt()) {
+           requirements.setText("level requirements :" + level.getCoinsRequired() + " coins");
+           requirements.setBounds(335,360,600,100);
+       }else {
+           requirements.setText("Coming soon!");
+           requirements.setBounds(480,360,600,100);
+       }
        Font font = new Font("Algerian", Font.BOLD, 35);
        requirements.setFont(font);
        this.add(requirements);
 
-        JButton startGame = new JButton();
-        startGame.setBounds(680,615,100,40);
-        startGame.setOpaque(false);
-        startGame.setContentAreaFilled(false);
-        startGame.setBorderPainted(false);
-        startGame.setFocusPainted(false);
-        startGame.setIcon(new ImageIcon(resizedPlayImage));
-        this.add(startGame);
-        startGame.addActionListener(event -> {
-            SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_LOBBY_MUSIC);
-            gameFrame = new GameFrame(level,levelsMenu, window);
-            window.switchPanel(gameFrame);
-        });
+       if (level.isBuilt()) {
+           JButton startGame = new JButton();
+           startGame.setBounds(680, 615, 100, 40);
+           startGame.setOpaque(false);
+           startGame.setContentAreaFilled(false);
+           startGame.setBorderPainted(false);
+           startGame.setFocusPainted(false);
+           startGame.setIcon(new ImageIcon(resizedPlayImage));
+           this.add(startGame);
+           startGame.addActionListener(event -> {
+               SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_LOBBY_MUSIC);
+               gameFrame = new GameFrame(level, levelsMenu, window);
+               window.switchPanel(gameFrame);
+           });
+       }
 
         JButton back = new JButton();
-        back.setBounds(430,615,100,40);
+       if (level.isBuilt()) {
+           back.setBounds(430, 615, 100, 40);
+       }else {
+           back.setBounds(550, 615, 100, 40);
+       }
         back.setOpaque(false);
         back.setContentAreaFilled(false);
         back.setBorderPainted(false);

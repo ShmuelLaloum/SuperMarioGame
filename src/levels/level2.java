@@ -5,7 +5,7 @@ import items.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class level2 extends level{
+public class level2 implements level{
     private final List<Coin> coins = new ArrayList<>();
     private final List<bigTube> bigTubes = new ArrayList<>();
     private final List<BillBlaster> billBlasters = new ArrayList<>();
@@ -17,6 +17,7 @@ public class level2 extends level{
     private final List<castle> castles = new ArrayList<>();
     private final List<mushroom> mushrooms = new ArrayList<>();
     private Person mario;
+    public final static boolean built = true;
     public static final int coinsRequired = 15;
     private int startPointX = 0;
     private int endPointX = 2810;
@@ -216,5 +217,8 @@ public class level2 extends level{
     }
     public int getEndPointX(){
         return endPointX;
+    }
+    public boolean isBuilt(){
+        return built;
     }
 }

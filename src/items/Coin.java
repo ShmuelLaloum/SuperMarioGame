@@ -40,7 +40,8 @@ public class Coin{
         SoundManager.stopSound(SoundManager.SoundName.MARIO_COLLECTS_COIN);
         startCollected = true;
         new Thread(()->{
-            SoundManager.playSound(SoundManager.SoundName.MARIO_COLLECTS_COIN,-15.0f);
+            if (SoundManager.isPlayMusicEffect())
+                SoundManager.playSound(SoundManager.SoundName.MARIO_COLLECTS_COIN,-15.0f);
             int sum = 0;
             while (x < 1500 /*705*/ || y > 60) {
                 if (active) {
