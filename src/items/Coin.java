@@ -16,6 +16,7 @@ public class Coin{
     private boolean finishedCollected = false;
     public static final ImageIcon imageIcon = ImageManager.getImageIcon(ImageManager.ImageName.COIN);
     private boolean active;
+    private static int widthFrame;
 
     public Coin(int x, int y){
         this.x = x;
@@ -25,6 +26,9 @@ public class Coin{
         Graphics2D g2d = (Graphics2D) graphics.create();
         g2d.drawImage(imageIcon.getImage(),x, y, width, height, null);
         g2d.dispose();
+    }
+    public static void setWidthFrame(int newWidth){
+        widthFrame = newWidth;
     }
     public void setX(int newX){
         x = newX;
@@ -43,13 +47,13 @@ public class Coin{
             if (SoundManager.isPlayMusicEffect())
                 SoundManager.playSound(SoundManager.SoundName.MARIO_COLLECTS_COIN,-15.0f);
             int sum = 0;
-            while (x < 1500 /*705*/ || y > 60) {
+            while (x < widthFrame || y > 60) {
                 if (active) {
-                    if (x < 1500) {
+                    if (x < widthFrame) {
                         x++;
                         sum++;
                     }
-                    if (y > 60 && sum == 2 || x == 1500) {
+                    if (y > 60 && sum == 2 || x == widthFrame) {
                         y--;
                         sum = 0;
                     }

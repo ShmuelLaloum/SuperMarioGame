@@ -1,6 +1,5 @@
 package items;
 
-import gameScreens.GameFrame;
 import resourcesManager.ImageManager;
 import resourcesManager.SoundManager;
 
@@ -8,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Person implements needLandAble{
+public class Mario implements needLandAble{
     private int x;
     private int y;
     private int ground;
@@ -32,13 +31,17 @@ public class Person implements needLandAble{
     private boolean CanGoLeft = true,CanGoRight = true,CanJump= true;
     private volatile boolean active = false;  // מתחיל כ-false
     private Thread landUpdateThread;
+    private static int heightFrame;
 
-    public Person(int x, int y) {
+    public Mario(int x, int y) {
         status = options.NORMAL;
         this.x = x;
         this.y = y;
         this.alive = true;
         image = ImageManager.getImageIcon(ImageManager.ImageName.MARIO_GOES_RIGHT);//imageMarioGoesRight;
+    }
+    public static void setHeightFrame(int newHeight){
+        heightFrame = newHeight;
     }
     private void createThread() {
         landUpdateThread = new Thread(this::LandUpdate);
@@ -64,10 +67,6 @@ public class Person implements needLandAble{
         AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha);
         g2d.setComposite(composite);
         g2d.drawImage(image.getImage(), x, y, width, height, null);
-
-        for (fireBall fireBall : fireBalls){
-            fireBall.paint(graphics);
-        }
         g2d.dispose();
     }
     public void jump() {
@@ -117,7 +116,7 @@ public class Person implements needLandAble{
         }
     }
 
-    public void die(int heightFrame){
+    public void die(){
         if (SoundManager.isPlayMusicEffect())
             SoundManager.playSound(SoundManager.SoundName.MARIO_DIE);
         this.alive = false;
@@ -196,14 +195,9 @@ public class Person implements needLandAble{
             }
         }
     }
-
     public Rectangle body(){
         return new Rectangle(x,y,width,height);
     }
-    public void setFireBalls(ArrayList<fireBall> fireBalls){
-        this.fireBalls = fireBalls;
-    }
-
     public void shoot(){
         fireBalls.add(new fireBall(Math.min(x , Window.WIDTH / 2),y));
         fireBalls.getLast().shoot();

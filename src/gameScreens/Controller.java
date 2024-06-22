@@ -1,6 +1,6 @@
 package gameScreens;
 
-import items.Person;
+import items.Mario;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -10,10 +10,10 @@ public class Controller implements KeyListener {
     private boolean leftPressed = false;
     private boolean jumpPressed = false;
     private boolean active;
-    private Person mario;
+    private Mario mario;
     private GameFrame gameFrame;
 
-    public Controller(Person mario,GameFrame gameFrame) {
+    public Controller(Mario mario, GameFrame gameFrame) {
         this.mario = mario;
         this.gameFrame = gameFrame;
         active = true;
@@ -33,8 +33,6 @@ public class Controller implements KeyListener {
             leftPressed = true;
         } else if (keyCode == KeyEvent.VK_UP || keyCode == KeyEvent.VK_W) {
             jumpPressed = true;
-        }else if (keyCode == KeyEvent.VK_SPACE){
-            mario.shoot();
         }
     }
 
@@ -59,13 +57,13 @@ public class Controller implements KeyListener {
                         if (rightPressed) {
                             if (mario.isCanGoRight()) {
                                 mario.moveRight();
-                                gameFrame.moveScreen(-Person.walkingDistance);
+                                gameFrame.moveScreen(-Mario.walkingDistance);
                             }
                             mario.jump();
                         } else if (leftPressed) {
                             if (mario.isCanGoLeft()) {
                                 mario.moveLeft();
-                                gameFrame.moveScreen(Person.walkingDistance);
+                                gameFrame.moveScreen(Mario.walkingDistance);
                             }
                             mario.jump();
                         } else {
@@ -74,10 +72,10 @@ public class Controller implements KeyListener {
                     } else {
                         if (rightPressed && mario.isCanGoRight()) {
                             mario.moveRight();
-                            gameFrame.moveScreen(-Person.walkingDistance);
+                            gameFrame.moveScreen(-Mario.walkingDistance);
                         } else if (leftPressed && mario.isCanGoLeft()) {
                             mario.moveLeft();
-                            gameFrame.moveScreen(Person.walkingDistance);
+                            gameFrame.moveScreen(Mario.walkingDistance);
                         }
                     }
                 }

@@ -31,7 +31,7 @@ public class GameFrame extends JPanel {
     private List<PenGoalPole> penGoalPoles = new ArrayList<>();
     private List<castle> castles = new ArrayList<>();
     private List<Cube> deadSpaceCubes = new ArrayList<>();
-    private Person mario;
+    private Mario mario;
     private final level levelX;
     private final window window;
     private boolean stop = false;
@@ -50,6 +50,8 @@ public class GameFrame extends JPanel {
         leMenu = levelsMenu;
         this.levelX = level;
         this.window = window;
+        Coin.setWidthFrame(window.getWidth());
+        Mario.setHeightFrame(window.getHeight());
 
         JButton pauseButton = new JButton();
         pauseButton.setOpaque(false);
@@ -118,6 +120,7 @@ public class GameFrame extends JPanel {
         for (bigTube b : bigTubes)
             if (b.getStatus() == bigTube.type.enemy)
                 enemyAbles.add(b.getCarnivorousPlant());
+
 
         needLandAbles.add(mario);
         startPoint = levelX.getStartPointX();
@@ -251,8 +254,8 @@ public class GameFrame extends JPanel {
 
         for (int i = 0; i < enemyAbles.size() && mario.isAlive(); i++) {
             if (collision(enemyAbles.get(i).body(), mario.body())) {
-                if (mario.getStatus() == Person.options.NORMAL) {
-                    mario.die(window.getHeight());
+                if (mario.getStatus() == Mario.options.NORMAL) {
+                    mario.die();
                     needLandAbles.remove(mario);
                 } else {
                     mario.normalBody();
@@ -278,14 +281,14 @@ public class GameFrame extends JPanel {
         }
 
         for (int i = 0; i < brokenCubes.size(); i++) {
-            if (collision(mario.ceilingArea(), brokenCubes.get(i).floorSpace()) && mario.getStatus() == Person.options.BigBody && mario.getHeJumps()) {
+            if (collision(mario.ceilingArea(), brokenCubes.get(i).floorSpace()) && mario.getStatus() == Mario.options.BigBody && mario.getHeJumps()) {
                 groundAbles.remove(brokenCubes.remove(i));
                 break;
             }
         }
 
         for (needLandAble needLandAble : needLandAbles) {
-            if (needLandAble instanceof Person) {
+            if (needLandAble instanceof Mario) {
                 mario.setTouchGround(false);
             }
             groundAble closestCube = null;
@@ -298,7 +301,7 @@ public class GameFrame extends JPanel {
                 int distanceY = upperArea.y - floorSpace.y >= -1 ? upperArea.y - floorSpace.y : Integer.MAX_VALUE;
 
                 if (collision(needLandAble.floorSpace(), c.upperArea()) || distanceX < (needLandAble.getWidth()/2) && distanceY < closestDistance) {
-                    if (collision(needLandAble.floorSpace(), c.upperArea()) && needLandAble instanceof Person) {
+                    if (collision(needLandAble.floorSpace(), c.upperArea()) && needLandAble instanceof Mario) {
                         mario.setTouchGround(true);
                     }
                     closestCube = c;
@@ -312,7 +315,7 @@ public class GameFrame extends JPanel {
         }
         for (Cube d : deadSpaceCubes){
             if (mario.isAlive() && collision(mario.floorSpace(),d.upperArea())){
-                mario.die(window.getHeight());
+                mario.die();
                 break;
             }
         }

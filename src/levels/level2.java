@@ -16,7 +16,7 @@ public class level2 implements level{
     private final List<PenGoalPole> penGoalPoles = new ArrayList<>();
     private final List<castle> castles = new ArrayList<>();
     private final List<mushroom> mushrooms = new ArrayList<>();
-    private Person mario;
+    private Mario mario;
     public static final boolean built = true;
     public static final int coinsRequired = 15;
     private int startPointX = 0;
@@ -35,7 +35,7 @@ public class level2 implements level{
         addDefaultCastles();
     }
     public void setMario(){
-        mario = new Person(15,660);
+        mario = new Mario(15,660);
     }
     public void addDefaultPenGoalPoles(){
         penGoalPoles.add(new PenGoalPole(2450,300));
@@ -179,7 +179,7 @@ public class level2 implements level{
     public List<mushroom> getMushrooms(){
         return mushrooms;
     }
-    public Person getMario(){
+    public Mario getMario(){
         return mario;
     }
     public List<Coin> getCoins() {

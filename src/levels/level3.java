@@ -16,7 +16,7 @@ public class level3 implements level{
     private final List<PenGoalPole> penGoalPoles = new ArrayList<>();
     private final List<mushroom> mushrooms = new ArrayList<>();
     private final List<castle> castles = new ArrayList<>();
-    private Person mario;
+    private Mario mario;
     public static final boolean built = false; //need to change
     public static final int coinsRequired = 0;//need to change
     private int startPointX = 0;
@@ -92,7 +92,7 @@ public class level3 implements level{
     public List<mushroom> getMushrooms(){
         return mushrooms;
     }
-    public Person getMario(){
+    public Mario getMario(){
         return mario;
     }
     public List<Coin> getCoins() {

@@ -16,7 +16,7 @@ public interface level {
     void addDefaultBigTubes();
     void setStartPointX(int newStartPointX);
     void setEndPointX(int newEndPointX);
-    Person getMario();
+    Mario getMario();
     List<mushroom> getMushrooms();
     int getCoinsRequired();
     List<Coin> getCoins();
