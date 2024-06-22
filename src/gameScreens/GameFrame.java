@@ -50,7 +50,7 @@ public class GameFrame extends JPanel {
         leMenu = levelsMenu;
         this.levelX = level;
         this.window = window;
-        Coin.setWidthFrame(window.getWidth());
+        Coin.setWidthFrame(1500);
         Mario.setHeightFrame(window.getHeight());
 
         JButton pauseButton = new JButton();
@@ -332,7 +332,8 @@ public class GameFrame extends JPanel {
         g2d.drawImage(Coin.imageIcon.getImage(), getWidth() - Coin.width * 2, Coin.height, Coin.width, Coin.height, this);
         g2d.setFont(new Font("Arial", Font.BOLD, 35));
         g2d.setColor(Color.yellow);
-        g2d.drawString(collectedCoins + "*", getWidth() - Coin.width * 2 - 35, Coin.height * 2);
+        String sumCoin = collectedCoins + "/" + levelX.getCoinsRequired();
+        g2d.drawString(sumCoin, getWidth() - 140 - sumCoin.length()*5, Coin.height * 2);
         g2d.dispose();
 
         for (Coin c : coins)
