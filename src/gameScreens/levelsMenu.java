@@ -215,13 +215,6 @@ public class levelsMenu extends JLayeredPane {
         }
     }
 
-    /*public void moveToFront(Component component) {
-        this.setLayer(component, JLayeredPane.PALETTE_LAYER);
-        component.setVisible(true);
-        component.repaint();
-    }
-
-     */
     public void removePanelMakeSureToStart(){
         this.remove(makeSureToStart);
         this.revalidate();
