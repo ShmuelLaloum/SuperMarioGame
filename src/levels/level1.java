@@ -17,7 +17,7 @@ public class level1 implements level{
     private final List<castle> castles = new ArrayList<>();
     private final List<mushroom> mushrooms = new ArrayList<>();
     private Person mario;
-    public final static boolean built = true;
+    public static final boolean built = true;
     public static final int coinsRequired = 20;
     private int startPointX = 0;
     private int endPointX = 2620;
