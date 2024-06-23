@@ -47,6 +47,7 @@ public class endLevelScreen extends JPanel {
         levelsButton.setFocusPainted(false);
         levelsButton.setIcon(new ImageIcon(resizedLevelsImage));
         levelsButton.addActionListener(event -> {
+            gaFrame.setEnd(true);
             gaFrame = null;
             leMenu.removePanelMakeSureToStart();
             window.switchPanel(leMenu);
@@ -59,6 +60,7 @@ public class endLevelScreen extends JPanel {
         retryLevelButton.setFocusPainted(false);
         retryLevelButton.setIcon(new ImageIcon(resizedRetryLevelButtonImage));
         retryLevelButton.addActionListener(event -> {
+            gaFrame.setEnd(true);
             SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_LOBBY_MUSIC);
             level = gameScreens.levelsMenu.resetLevel(level);
             gaFrame = new GameFrame(level,leMenu,window);
@@ -73,6 +75,7 @@ public class endLevelScreen extends JPanel {
             nextLevelButton.setFocusPainted(false);
             nextLevelButton.setIcon(new ImageIcon(resizedNextLeveImage));
             nextLevelButton.addActionListener(event -> {
+                gaFrame.setEnd(true);
                 SoundManager.stopSound(SoundManager.SoundName.BACKGROUND_LOBBY_MUSIC);
                 level = gameScreens.levelsMenu.getNextLevel(level);
                 gaFrame = new GameFrame(level,leMenu,window);

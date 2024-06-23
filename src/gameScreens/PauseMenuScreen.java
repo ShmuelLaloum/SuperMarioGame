@@ -127,6 +127,7 @@ public class PauseMenuScreen extends JPanel {
         continueButton.setIcon(new ImageIcon(resizedContinueImage));
 
         continueButton.addActionListener(event -> {
+            gaFrame.setEnd(true);
             gaFrame = new GameFrame(level,levelsMenu,window);
             window.switchPanel(gaFrame);
         });

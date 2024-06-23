@@ -40,6 +40,7 @@ public class GameFrame extends JPanel {
     private Controller controller;
     private static PauseMenuScreen pauseMenuScreen;
     private static endLevelScreen endLevelScreen;
+
     public GameFrame(level level,levelsMenu levelsMenu, window window) {
         end = false;
         if (SoundManager.isPlayBackGroundMusic())
@@ -84,9 +85,10 @@ public class GameFrame extends JPanel {
         });
         timer.start();
         setupGameObjects();
+
         controller = new Controller(mario,this);
-        setActive(true);
         this.addKeyListener(controller);
+        setActive(true);
         this.mainGameLoop();
     }
     private void setupGameObjects(){
@@ -373,7 +375,7 @@ public class GameFrame extends JPanel {
         boolean inFirstHalf = (mario.getX() - startPoint) <= screenWidth;
         boolean inLastHalf = (endPoint - mario.getX()) <= screenWidth;
 
-        if ((startPoint + distance) <= 0 && (endPoint + distance) >= 0) {
+        if ((startPoint + distance) <= 0 && (endPoint + distance) >= 0 && !stop) {
             if (inLastHalf || inFirstHalf) {
                 if ((mario.getX()  - distance) <= endPoint) {
                     mario.setX(mario.getX() - distance);
@@ -383,7 +385,7 @@ public class GameFrame extends JPanel {
             }
         }
 
-        if (!n) {
+        if (!n && !stop) {
             distance *= 2;
         }
         if ((startPoint + distance) <= 0 && (endPoint - getWidth() + distance) >= 0) {

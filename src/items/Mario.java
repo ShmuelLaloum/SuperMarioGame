@@ -242,5 +242,8 @@ public class Mario implements needLandAble{
             landUpdateThread.interrupt();
         }
     }
+    public void setAlive(boolean nweAlive){
+        alive = nweAlive;
+    }
 
 }
