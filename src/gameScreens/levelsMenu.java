@@ -271,6 +271,6 @@ public class levelsMenu extends JLayeredPane {
         }else {
             playEffectButton.setIcon(new ImageIcon(resizedplayEffectNoActiveImage));
         }
-        System.out.println("D");
+        System.out.println("l");
     }
 }
