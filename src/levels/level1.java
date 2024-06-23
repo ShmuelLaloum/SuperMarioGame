@@ -53,7 +53,7 @@ public class level1 implements level{
     }
     public void addDefaultGoombas(){
         goombas.add( new goomba(427, 444));
-        goombas.add( new goomba(245, 238));
+        goombas.add( new goomba(243, 235));
         goombas.add( new goomba(630, 670));
         goombas.add( new goomba(900, 670));
         goombas.add( new goomba(1100, 670));
@@ -135,6 +135,7 @@ public class level1 implements level{
         cubes.add(new Cube(1330,660, Cube.type.WOOD));
     }
     public void addDefaultBillBlasters(){
+        billBlasters.add(new BillBlaster(165,140, BillBlaster.directionBill.right));
         billBlasters.add(new BillBlaster(1590,633, BillBlaster.directionBill.left));
     }
     public void addDefaultCoins() {
