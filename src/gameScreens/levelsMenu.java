@@ -14,8 +14,8 @@ public class levelsMenu extends JLayeredPane {
     public static final ImageIcon level4ButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.LEVEL4_BUTTON);
     public static final ImageIcon level5ButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.LEVEL5_BUTTON);
     public static final ImageIcon backgroundImage = ImageManager.getImageIcon(ImageManager.ImageName.LEVELS_MENU_SCREEN_BACKGROUND);
-    private static boolean levelIsComplete1 = true;
-    private static boolean levelIsComplete2 = true;
+    private static boolean levelIsComplete1 = false;
+    private static boolean levelIsComplete2 = false;
     private static boolean levelIsComplete3 = false;
     private static boolean levelIsComplete4 = false;
     private static boolean levelIsComplete5 = false;
