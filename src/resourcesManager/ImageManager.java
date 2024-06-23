@@ -55,8 +55,14 @@ public class ImageManager {
         BACKGROUND_MUSIC_ACTIVE_BUTTON("backgroundMusicActive.png"),
         BACKGROUND_MUSIC_NO_ACTIVE_BUTTON("backgroundMusicNoActive.png"),
         MUSIC_EFFECT_ACTIVE_BUTTON("musicEffectActive.png"),
-        MUSIC_EFFECT_NO_ACTIVE_BUTTON("musicEffectNoActive.png");
-
+        MUSIC_EFFECT_NO_ACTIVE_BUTTON("musicEffectNoActive.png"),
+        EXPLAIN_OF_THE_GAME("explainOfTheGame.png"),
+        JUMP_BUTTON("jumpButton.png"),
+        MOVE_RIGHT_BUTTON("moveRightButton.png"),
+        MOVE_LEFT_BUTTON("moveLeftButton.png"),
+        LETS_GO_BUTTON("letsGoButton.png"),
+        INFORMATION_BUTTON("informationButton.png"),
+        START_BUTTON("startButton.png");
         private final String fileName;
 
         ImageName(String fileName) {
