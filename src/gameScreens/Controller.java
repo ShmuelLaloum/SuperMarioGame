@@ -9,15 +9,14 @@ public class Controller implements KeyListener {
     private boolean rightPressed = false;
     private boolean leftPressed = false;
     private boolean jumpPressed = false;
-    private boolean active;
+    private boolean active = false;
     private Mario mario;
     private GameFrame gameFrame;
+    private Thread updateMovementThread;
 
     public Controller(Mario mario, GameFrame gameFrame) {
         this.mario = mario;
         this.gameFrame = gameFrame;
-        active = true;
-        updateMovement();
     }
 
     @Override
@@ -50,44 +49,49 @@ public class Controller implements KeyListener {
     }
 
     private void updateMovement() {
-        new Thread(()->{
-            while (mario.isAlive()) {
-                if (active) {
-                    if (jumpPressed) {
-                        if (rightPressed) {
-                            if (mario.isCanGoRight()) {
-                                mario.moveRight();
-                                gameFrame.moveScreen(-Mario.walkingDistance);
-                            }
-                            mario.jump();
-                        } else if (leftPressed) {
-                            if (mario.isCanGoLeft()) {
-                                mario.moveLeft();
-                                gameFrame.moveScreen(Mario.walkingDistance);
-                            }
-                            mario.jump();
-                        } else {
-                            mario.jump();
-                        }
-                    } else {
-                        if (rightPressed && mario.isCanGoRight()) {
-                            mario.moveRight();
-                            gameFrame.moveScreen(-Mario.walkingDistance);
-                        } else if (leftPressed && mario.isCanGoLeft()) {
-                            mario.moveLeft();
-                            gameFrame.moveScreen(Mario.walkingDistance);
-                        }
+        while (mario.isAlive() && active) {
+            if (jumpPressed) {
+                if (rightPressed) {
+                    if (mario.isCanGoRight()) {
+                        mario.moveRight();
+                        gameFrame.moveScreen(-Mario.walkingDistance);
                     }
+                    mario.jump();
+                } else if (leftPressed) {
+                    if (mario.isCanGoLeft()) {
+                        mario.moveLeft();
+                        gameFrame.moveScreen(Mario.walkingDistance);
+                    }
+                    mario.jump();
+                } else {
+                    mario.jump();
                 }
-                try {
-                    Thread.sleep(30);
-                } catch (Exception e) {
-
+            } else {
+                if (rightPressed && mario.isCanGoRight()) {
+                    mario.moveRight();
+                    gameFrame.moveScreen(-Mario.walkingDistance);
+                } else if (leftPressed && mario.isCanGoLeft()) {
+                    mario.moveLeft();
+                    gameFrame.moveScreen(Mario.walkingDistance);
                 }
             }
-        }).start();
+            try {
+                Thread.sleep(30);
+            } catch (Exception e) {
+            }
+        }
     }
-    public void setActive(boolean newActive){
-        this.active = newActive;
+    private void createThread() {
+        updateMovementThread = new Thread(this::updateMovement);
+    }
+    public synchronized void setActive(boolean newActive) {
+        if (newActive && !active){
+            active = true;
+            createThread();  // יצירת התרדים מחדש כדי שנוכל להפעילם שוב
+            updateMovementThread.start();
+        } else if (!newActive && active) {
+            active = false;
+            updateMovementThread.interrupt();
+        }
     }
 }

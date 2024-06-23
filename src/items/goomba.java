@@ -154,6 +154,14 @@ public class goomba implements enemyAble, needLandAble {
             active = false;
             moveThread.interrupt();
             landUpdateThread.interrupt();
+
+            /*try {
+                landUpdateThread.join();  // להמתין עד שהתרד יסיים
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();  // לשחזר את המצב של ה-interrupt
+            }
+
+             */
         }
     }
 }

@@ -70,7 +70,7 @@ public class PenGoalPole implements needLandAble{
     public int getWidth() {
         return width;
     }
-    public void setActive(boolean newActive) {
+    public synchronized void setActive(boolean newActive) {
         if (newActive && !active) {
             active = true;
             createThread();  // יצירת התרד רק אם הוא עדיין לא קיים או שהוא לא פעיל

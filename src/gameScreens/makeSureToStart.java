@@ -11,8 +11,12 @@ public class makeSureToStart extends JPanel {
     private static final ImageIcon playButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.PLAY_BUTTON_BACKGROUND);
     private static final ImageIcon backButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.BACK_BUTTON_BACKGROUND);
     public static final ImageIcon backgroundImage = ImageManager.getImageIcon(ImageManager.ImageName.MAKE_SURE_TO_START_SCREEN_BACKGROUND);
+    private static final ImageIcon threeGoldStars = ImageManager.getImageIcon(ImageManager.ImageName.THREE_GOLD_STARS);
+    private static final ImageIcon threeGreyStars = ImageManager.getImageIcon(ImageManager.ImageName.THREE_GREY_STARS);
     private static GameFrame gameFrame;
-    public makeSureToStart(window window,levelsMenu levelsMenu, level level){
+    private level level;
+    public makeSureToStart(window window,levelsMenu levelsMenu, level Openlevel){
+        level = Openlevel;
         this.setOpaque(false);
         this.setLayout(null);
         this.setBounds(150,50,1250,750);
@@ -68,5 +72,10 @@ public class makeSureToStart extends JPanel {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         graphics.drawImage(backgroundImage.getImage(), 0, 0, this.getWidth(), this.getHeight(), this);
+        if (levelsMenu.isLevelIsComplete(level)){
+            graphics.drawImage(threeGoldStars.getImage(), 400, 100, threeGoldStars.getIconWidth()*2, threeGoldStars.getIconHeight()*2, this);
+        }else {
+            graphics.drawImage(threeGreyStars.getImage(), 400,100, threeGreyStars.getIconWidth()*2, threeGreyStars.getIconHeight()*2, this);
+        }
     }
 }

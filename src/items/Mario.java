@@ -232,7 +232,7 @@ public class Mario implements needLandAble{
     public options getStatus(){
         return status;
     }
-    public void setActive(boolean newActive) {
+    public synchronized void setActive(boolean newActive) {
         if (newActive && !active) {
             active = true;
             createThread();
@@ -242,7 +242,7 @@ public class Mario implements needLandAble{
             landUpdateThread.interrupt();
         }
     }
-    public void setAlive(boolean nweAlive){
+    public  void setAlive(boolean nweAlive){
         alive = nweAlive;
     }
 

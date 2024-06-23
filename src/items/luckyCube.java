@@ -63,7 +63,7 @@ public class luckyCube extends Cube{
     public Rectangle floorSpace(){
         return new Rectangle(getX()+width/15,getY()+height ,width-width/15,height/15);
     }
-    public void setActive(boolean newActive){
+    public synchronized void setActive(boolean newActive){
         active = newActive;
     }
 }

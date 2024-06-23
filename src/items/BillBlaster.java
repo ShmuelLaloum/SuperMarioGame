@@ -119,7 +119,7 @@ public class BillBlaster implements groundAble, needLandAble {
     public Rectangle upperArea() {
         return  new Rectangle(x,y,width,height/15);
     }
-    public void setActive(boolean newActive) {
+    public synchronized void setActive(boolean newActive) {
         if (newActive && !active) {
             active  = true;
             createThreads();  // יצירת התרד מחדש

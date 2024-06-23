@@ -40,6 +40,7 @@ public class GameFrame extends JPanel {
     private Controller controller;
     private static PauseMenuScreen pauseMenuScreen;
     private static endLevelScreen endLevelScreen;
+    private Timer moveImageTimer;
 
     public GameFrame(level level,levelsMenu levelsMenu, window window) {
         end = false;
@@ -77,13 +78,12 @@ public class GameFrame extends JPanel {
         this.add(pauseButton);
 
         int delay = 50;
-        Timer timer = new Timer(delay, e -> {
+        moveImageTimer = new Timer(delay, e -> {
             imageX++;
             if (imageX >= getWidth()) {
                 imageX = 0;
             }
         });
-        timer.start();
         setupGameObjects();
 
         controller = new Controller(mario,this);
@@ -182,6 +182,7 @@ public class GameFrame extends JPanel {
         for (int i = 0; i < coins.size(); i++) {
             if (coins.get(i).isFinishedCollecting()) {
                 collectedCoins++;
+                coins.get(i).setActive(false);
                 coins.remove(i--);
             } else if (!coins.get(i).isStartCollected() && collision(mario.body(), coins.get(i).body())) {
                 coins.get(i).collected();
@@ -220,16 +221,18 @@ public class GameFrame extends JPanel {
                 mario.bodyGrows();
                 needLandAbles.remove(m);
                 mushrooms.remove(m);
+                m.setActive(false);
                 break;
             }
         }
 
         for (int i = 0; i < goombas.size(); i++) {
             if (goombas.get(i).isFinish()){
+                goombas.get(i).setActive(false);
                 needLandAbles.remove(goombas.get(i));
                 enemyAbles.remove(goombas.get(i));
                 goombas.remove(i--);
-            }else if (collision(mario.floorSpace(), goombas.get(i).ceilingArea()) && goombas.get(i).isAlive()) {
+            }else if (collision(mario.floorSpace(), goombas.get(i).ceilingArea()) && goombas.get(i).isAlive() && !mario.getHeJumps()) {
                 mario.setHeJumps(false);
                 mario.setTouchGround(true);
                 mario.jump();
@@ -426,6 +429,11 @@ public class GameFrame extends JPanel {
         }
     }
     public void setActive(boolean newActive){
+        if (newActive)
+            moveImageTimer.start();
+        else
+            moveImageTimer.start();
+        mario.setActive(false);
         this.stop = !newActive;
         this.controller.setActive(newActive);
         mario.setActive(newActive);

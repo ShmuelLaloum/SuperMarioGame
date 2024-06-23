@@ -61,7 +61,7 @@ public class mushroom implements needLandAble {
         x += direction < 0 ? 4 : -4;
         direction *= -1;
     }
-    public void setActive(boolean newActive){
+    public synchronized void setActive(boolean newActive){
         if (newActive && !active){
             active = true;
             createThreads();  // יצירת התרדים מחדש כדי שנוכל להפעילם שוב

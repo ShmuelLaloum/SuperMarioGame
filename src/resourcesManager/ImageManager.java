@@ -62,7 +62,11 @@ public class ImageManager {
         MOVE_LEFT_BUTTON("moveLeftButton.png"),
         LETS_GO_BUTTON("letsGoButton.png"),
         INFORMATION_BUTTON("informationButton.png"),
-        START_BUTTON("startButton.png");
+        START_BUTTON("startButton.png"),
+        THREE_GOLD_STARS("threeGoldStars.png"),
+        THREE_GREY_STARS("threeGreyStars.png");
+
+
         private final String fileName;
 
         ImageName(String fileName) {

@@ -72,7 +72,7 @@ public class Coin{
     public boolean isFinishedCollecting(){
         return finishedCollected;
     }
-    public void setActive(boolean newActive){
+    public synchronized void setActive(boolean newActive){
         active = newActive;
     }
 }

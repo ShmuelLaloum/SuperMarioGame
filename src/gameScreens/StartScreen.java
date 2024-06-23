@@ -11,6 +11,7 @@ import java.io.IOException;
 
 public class StartScreen extends JPanel {
     private JButton startButton;
+    private JButton informationButton;
     public static final ImageIcon backgroundImage = ImageManager.getImageIcon(ImageManager.ImageName.LOGIN_SCREEN_BACKGROUND);
     public static final ImageIcon informationButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.INFORMATION_BUTTON);
     public static final ImageIcon startButtonImage = ImageManager.getImageIcon(ImageManager.ImageName.START_BUTTON);
@@ -32,7 +33,7 @@ public class StartScreen extends JPanel {
 
         this.add(startButton);
 
-        JButton informationButton = new JButton(new ImageIcon(resizedImage1));
+        informationButton = new JButton(new ImageIcon(resizedImage1));
         informationButton.setBounds(450, 740, 250, 95);
         informationButton.setOpaque(false);
         informationButton.setContentAreaFilled(false);
@@ -47,8 +48,10 @@ public class StartScreen extends JPanel {
             window.switchPanel(levelsMenu);
         });
         informationButton.addActionListener(event -> {
-            explainOfTheGame explainOfTheGame = new explainOfTheGame();
-            this.add(explainOfTheGame, JLayeredPane.PALETTE_LAYER);
+            this.setLayout(new BorderLayout());
+            explainOfTheGame explainOfTheGame = new explainOfTheGame(window,this);
+            buttonsAreVisible(false);
+            this.add(explainOfTheGame);
             this.revalidate();
             this.repaint();
         });
@@ -57,5 +60,9 @@ public class StartScreen extends JPanel {
     public void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         graphics.drawImage(backgroundImage.getImage(), 0, 0, 1540, 941, this);
+    }
+    public void buttonsAreVisible(boolean visible){
+        startButton.setVisible(visible);
+        informationButton.setVisible(visible);
     }
 }
